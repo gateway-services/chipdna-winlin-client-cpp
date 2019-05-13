@@ -1,0 +1,51 @@
+LIBOPENSSL_INC = /usr/include/x86_64-linux-gnu/
+CPP_ROOTPATH = /usr/lib/gcc/x86_64-linux-gnu/5.4.0
+CPP_LIB_PATH = $(CPP_ROOTPATH)
+CPP_COMPILE = g++
+CPP_LIB_NAME = libstdc++
+CFLAGS = 
+LDFLAGS = -m32 -L/usr/lib32
+OBJ_DIR = obj-x86
+
+LIBCHIPDNACLIENT_SRC_PATH = ../src
+LIBCHIPDNACLIENT_INC_PATH = ../include
+LIBCHIPDNACLIENT_LIBNAME = libchipdnaclient-x86.a
+LIBCHIPDNACLIENT_SRC_ = \
+	cardhash.cpp \
+	cardstatus.cpp \
+	chipdnastatus.cpp \
+	clientbase.cpp \
+	clienthelper.cpp \
+	libraryversion.cpp \
+	parameter.cpp \
+	parameterkeys.cpp \
+	parameterset.cpp \
+	pugixml.cpp \
+	receiptdata.cpp \
+	response.cpp \
+	responsecontainer.cpp \
+	tcpipclient.cpp \
+	xmlrequest.cpp
+
+LIBCHIPDNACLIENT_SRC = $(patsubst %, $(OBJ_DIR)/%, $(LIBCHIPDNACLIENT_SRC_))
+LIBCHIPDNACLIENT_OBJ = $(LIBCHIPDNACLIENT_SRC:.cpp=.o)
+
+DEPENDENCIES = -lrt 
+
+G++ = $(CPP_COMPILE) -D_GLIBC_2_0_SOURCE $(LDFLAGS)
+
+all: libchipdnaclient
+
+$(OBJ_DIR)/%.o: $(LIBCHIPDNACLIENT_SRC_PATH)/%.cpp | $(OBJ_DIR)
+	$(G++) -c -I$(LIBCHIPDNACLIENT_INC_PATH) -I$(LIBOPENSSL_INC) -o $@ $< $(CFLAGS)
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+libchipdnaclient : $(LIBCHIPDNACLIENT_OBJ)
+	cd $(OBJ_DIR) && ar x $(CPP_LIB_PATH)/$(CPP_LIB_NAME).a
+	ar rcs $(LIBCHIPDNACLIENT_LIBNAME) $(OBJ_DIR)/*.o $(LIBCHIPDNACLIENT_OBJ)
+
+clean :
+	rm -f $(OBJ_DIR)/*.o $(LIBCHIPDNACLIENT_OBJ) $(LIBCHIPDNACLIENT_LIBNAME)
+

@@ -1,0 +1,17 @@
+
+all:
+	@echo "Rules: sample-x86 sample-arm sample-x64 clean"
+
+sample-arm: $(CHIPDNACLIENTSAMPLE_OBJ)
+	$(MAKE) -e -f Makefile.arm all
+
+sample-x86: $(CHIPDNACLIENTSAMPLE_OBJ)
+	$(MAKE) -e -f Makefile.x86 all
+
+sample-x64: $(CHIPDNACLIENTSAMPLE_OBJ)
+	$(MAKE) -e -f Makefile.x64 all
+
+clean :
+	$(MAKE) -e -f Makefile.arm clean
+	$(MAKE) -e -f Makefile.x64 clean
+	$(MAKE) -e -f Makefile.x86 clean

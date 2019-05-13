@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ChipDnaClient version="1.0.0">
+  <TerminalId>********</TerminalId>
+  <Server>127.0.0.1:1869</Server>
+</ChipDnaClient>

@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="pugixml">
+      <UniqueIdentifier>{09c71f0d-4712-4266-8d8c-35e17060eb66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ParameterTokens">
+      <UniqueIdentifier>{d5ed0491-dddc-490c-b22a-242513b0a8c3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\CppLib\include\cardhash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\cardstatus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\chipdnastatus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\clientbase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\clienthelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\libraryversion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\parameter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\parameterkeys.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\parameterset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\pugiconfig.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\pugixml.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\receiptdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\response.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\responsecontainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\tcpipclient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\xmlrequest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\cardnotification.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\cardschemeid.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\chipdnaerrorcode.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\chipdnaserverissue.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\clienterrorcodes.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\configurationupdate.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\deferredauthorizationreason.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\pausetransactionstate.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\paymentdeviceavailabilityerror.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\paymentdeviceconfigurationstate.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\paymentdeviceerrorcode.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\paymentengineerrorcode.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\paymentplatformstate.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\receiptitemtype.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\scope.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\source.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\state.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\terminatereason.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\tmsrequesttype.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\tmsupdateschedule.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\tmsupdatetype.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\transactionsource.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\transactiontype.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\updatetransactionfinishederrorcode.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\validationerrorcode.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\voidreason.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\CppLib\src\cardhash.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\cardstatus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\chipdnastatus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\clientbase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\clienthelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\libraryversion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\parameter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\parameterkeys.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\parameterset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\pugixml.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\receiptdata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\response.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\responsecontainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\tcpipclient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\xmlrequest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

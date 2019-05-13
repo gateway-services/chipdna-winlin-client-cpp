@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6C4124CD-4B96-45C5-A86F-8545612BA886}</ProjectGuid>
+    <RootNamespace>LibChipDnaCpp</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <TargetName>libchipdnaclient-x86</TargetName>
+    <OutDir>$(SolutionDir)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IncludePath>..\..\..\CppLib\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>libchipdnaclient-x86</TargetName>
+    <IncludePath>..\..\..\CppLib\include;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MinSpace</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\..\include\</AdditionalIncludeDirectories>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>None</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>IF EXIST "C:\\Program Files\\TortoiseSVN\\bin\\SubWCRev.exe" (
+	IF EXIST "$(SolutionDir)\\..\\..\\..\\..\\set_chipdna_version_data.pl" (
+		IF EXIST "C:\\strawberry\\perl\\bin\\perl.exe" (
+			"C:\\strawberry\\perl\\bin\\perl.exe" -x"$(SolutionDir)\\..\\..\\..\\..\\" "$(SolutionDir)\\..\\..\\..\\..\\set_chipdna_version_data.pl" target=cpplib
+		)
+	) 
+) </Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\CppLib\include\cardhash.h" />
+    <ClInclude Include="..\..\..\CppLib\include\cardnotification.h" />
+    <ClInclude Include="..\..\..\CppLib\include\cardschemeid.h" />
+    <ClInclude Include="..\..\..\CppLib\include\cardstatus.h" />
+    <ClInclude Include="..\..\..\CppLib\include\chipdnaerrorcode.h" />
+    <ClInclude Include="..\..\..\CppLib\include\chipdnaserverissue.h" />
+    <ClInclude Include="..\..\..\CppLib\include\chipdnastatus.h" />
+    <ClInclude Include="..\..\..\CppLib\include\clientbase.h" />
+    <ClInclude Include="..\..\..\CppLib\include\clienterrorcodes.h" />
+    <ClInclude Include="..\..\..\CppLib\include\clienthelper.h" />
+    <ClInclude Include="..\..\..\CppLib\include\configurationupdate.h" />
+    <ClInclude Include="..\..\..\CppLib\include\deferredauthorizationreason.h" />
+    <ClInclude Include="..\..\..\CppLib\include\libraryversion.h" />
+    <ClInclude Include="..\..\..\CppLib\include\parameter.h" />
+    <ClInclude Include="..\..\..\CppLib\include\parameterkeys.h" />
+    <ClInclude Include="..\..\..\CppLib\include\parameterset.h" />
+    <ClInclude Include="..\..\..\CppLib\include\pausetransactionstate.h" />
+    <ClInclude Include="..\..\..\CppLib\include\paymentdeviceavailabilityerror.h" />
+    <ClInclude Include="..\..\..\CppLib\include\paymentdeviceconfigurationstate.h" />
+    <ClInclude Include="..\..\..\CppLib\include\paymentdeviceerrorcode.h" />
+    <ClInclude Include="..\..\..\CppLib\include\paymentengineerrorcode.h" />
+    <ClInclude Include="..\..\..\CppLib\include\paymentplatformstate.h" />
+    <ClInclude Include="..\..\..\CppLib\include\pugiconfig.hpp" />
+    <ClInclude Include="..\..\..\CppLib\include\pugixml.hpp" />
+    <ClInclude Include="..\..\..\CppLib\include\receiptdata.h" />
+    <ClInclude Include="..\..\..\CppLib\include\receiptitemtype.h" />
+    <ClInclude Include="..\..\..\CppLib\include\response.h" />
+    <ClInclude Include="..\..\..\CppLib\include\responsecontainer.h" />
+    <ClInclude Include="..\..\..\CppLib\include\scope.h" />
+    <ClInclude Include="..\..\..\CppLib\include\source.h" />
+    <ClInclude Include="..\..\..\CppLib\include\state.h" />
+    <ClInclude Include="..\..\..\CppLib\include\tcpipclient.h" />
+    <ClInclude Include="..\..\..\CppLib\include\terminatereason.h" />
+    <ClInclude Include="..\..\..\CppLib\include\tmsrequesttype.h" />
+    <ClInclude Include="..\..\..\CppLib\include\tmsupdateschedule.h" />
+    <ClInclude Include="..\..\..\CppLib\include\tmsupdatetype.h" />
+    <ClInclude Include="..\..\..\CppLib\include\transactionsource.h" />
+    <ClInclude Include="..\..\..\CppLib\include\transactiontype.h" />
+    <ClInclude Include="..\..\..\CppLib\include\updatetransactionfinishederrorcode.h" />
+    <ClInclude Include="..\..\..\CppLib\include\validationerrorcode.h" />
+    <ClInclude Include="..\..\..\CppLib\include\voidreason.h" />
+    <ClInclude Include="..\..\..\CppLib\include\xmlrequest.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\CppLib\src\cardhash.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\cardstatus.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\chipdnastatus.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\clientbase.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\clienthelper.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\libraryversion.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\parameter.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\parameterkeys.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\parameterset.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\pugixml.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\receiptdata.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\response.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\responsecontainer.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\tcpipclient.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\xmlrequest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\ChipDNA.CI.Pthreads-Win32.redist.2.91\build\native\ChipDNA.CI.Pthreads-Win32.redist.targets" Condition="Exists('packages\ChipDNA.CI.Pthreads-Win32.redist.2.91\build\native\ChipDNA.CI.Pthreads-Win32.redist.targets')" />
+    <Import Project="packages\ChipDNA.CI.Pthreads-Win32.2.91\build\native\ChipDNA.CI.Pthreads-Win32.targets" Condition="Exists('packages\ChipDNA.CI.Pthreads-Win32.2.91\build\native\ChipDNA.CI.Pthreads-Win32.targets')" />
+    <Import Project="packages\ChipDNA.CI.OpenSSL-Win32.redist.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.redist.targets" Condition="Exists('packages\ChipDNA.CI.OpenSSL-Win32.redist.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.redist.targets')" />
+    <Import Project="packages\ChipDNA.CI.OpenSSL-Win32.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.targets" Condition="Exists('packages\ChipDNA.CI.OpenSSL-Win32.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\ChipDNA.CI.Pthreads-Win32.redist.2.91\build\native\ChipDNA.CI.Pthreads-Win32.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ChipDNA.CI.Pthreads-Win32.redist.2.91\build\native\ChipDNA.CI.Pthreads-Win32.redist.targets'))" />
+    <Error Condition="!Exists('packages\ChipDNA.CI.Pthreads-Win32.2.91\build\native\ChipDNA.CI.Pthreads-Win32.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ChipDNA.CI.Pthreads-Win32.2.91\build\native\ChipDNA.CI.Pthreads-Win32.targets'))" />
+    <Error Condition="!Exists('packages\ChipDNA.CI.OpenSSL-Win32.redist.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ChipDNA.CI.OpenSSL-Win32.redist.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.redist.targets'))" />
+    <Error Condition="!Exists('packages\ChipDNA.CI.OpenSSL-Win32.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ChipDNA.CI.OpenSSL-Win32.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.targets'))" />
+  </Target>
+</Project>

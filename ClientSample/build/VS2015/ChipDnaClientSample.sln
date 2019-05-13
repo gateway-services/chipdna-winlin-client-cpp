@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChipDnaClientSample", "ChipDnaClientSample.vcxproj", "{D9C10799-8BDF-4871-9732-E37ACB2BF97D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6C4124CD-4B96-45C5-A86F-8545612BA886} = {6C4124CD-4B96-45C5-A86F-8545612BA886}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibChipDnaCpp", "LibChipDnaCpp.vcxproj", "{6C4124CD-4B96-45C5-A86F-8545612BA886}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9C10799-8BDF-4871-9732-E37ACB2BF97D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D9C10799-8BDF-4871-9732-E37ACB2BF97D}.Debug|Win32.Build.0 = Debug|Win32
+		{D9C10799-8BDF-4871-9732-E37ACB2BF97D}.Release|Win32.ActiveCfg = Release|Win32
+		{D9C10799-8BDF-4871-9732-E37ACB2BF97D}.Release|Win32.Build.0 = Release|Win32
+		{6C4124CD-4B96-45C5-A86F-8545612BA886}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6C4124CD-4B96-45C5-A86F-8545612BA886}.Debug|Win32.Build.0 = Debug|Win32
+		{6C4124CD-4B96-45C5-A86F-8545612BA886}.Release|Win32.ActiveCfg = Release|Win32
+		{6C4124CD-4B96-45C5-A86F-8545612BA886}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
