@@ -290,5 +290,31 @@ namespace ChipDnaClientLib {
 
 	const std::string ParameterKeys::MerchantDefinedField20 = "MERCHANT_DEFINED_FIELD_20";
 
+	const std::string ParameterKeys::AutoConfirm = "AUTO_CONFIRM";
+
 	const std::string ParameterKeys::CompleteBackgroundFirmwareUpdate = "COMPLETE_BACKGROUND_FIRMWARE_UPDATE";
+
+	const std::string ParameterKeys::TaxAmount = "TAX_AMOUNT";
+
+	const std::string ParameterKeys::PurchaseOrderNumber = "PO_NUMBER";
+
+	const std::string ParameterKeys::BillingAddress1 = "BILLING_ADDRESS_1";
+
+	const std::string ParameterKeys::BillingAddress2 = "BILLING_ADDRESS_2";
+
+	const std::string ParameterKeys::BillingCity = "BILLING_CITY";
+
+	const std::string ParameterKeys::BillingState = "BILLING_STATE";
+
+	const std::string ParameterKeys::BillingPostalCode = "BILLING_POSTAL_CODE";
+
+	const std::string ParameterKeys::BillingZipCode = "BILLING_ZIP_CODE";
+
+	const std::string ParameterKeys::BillingCountry = "BILLING_COUNTRY";
+
+	const std::string ParameterKeys::BillingEmailAddress = "BILLING_EMAIL_ADDRESS";
+
+	const std::string ParameterKeys::BillingPhoneNumber = "BILLING_PHONE_NUMBER";
+
+	const std::string ParameterKeys::SignatureVerificationResult = "SIGNATURE_VERIFICATION_RESULT";
 }

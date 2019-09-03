@@ -550,7 +550,19 @@ namespace ChipDnaClientLib {
 			* \brief
 			*	Device registration failed.
 			*/
-			DeviceRegistrationFailed
+			DeviceRegistrationFailed,
+
+			/**
+			* \brief
+			*	Confirmation request failed to go online and wasn't able to be stored offline. Confirmation requests can be retried using ClientHelper.ConfirmTransaction.
+			*/
+			ConfirmRequestFailed,
+
+			/**
+			* \brief
+			*	Void request failed to go online and wasn't able to be stored offline. Void requests can be retried using ClientHelper.VoidTransaction.
+			*/
+			VoidRequestFailed
 
 		};
 
@@ -647,6 +659,8 @@ namespace ChipDnaClientLib {
 				map["RejectedTransaction"] = RejectedTransaction;
 				map["RegistrationRequired"] = RegistrationRequired;
 				map["DeviceRegistrationFailed"] = DeviceRegistrationFailed;
+				map["ConfirmRequestFailed"] = ConfirmRequestFailed;
+				map["VoidRequestFailed"] = VoidRequestFailed;
 				return map;
 			}
 		};

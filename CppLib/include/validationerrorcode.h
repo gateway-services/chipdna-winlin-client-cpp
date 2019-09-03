@@ -59,7 +59,19 @@ namespace ChipDnaClientLib {
 			* \brief
 			* 	Parameter is not valid with related command.
 			**/
-			InvalidParameter
+			InvalidParameter,
+
+			/**
+			* \brief
+			* 	Billing Information contains ambiguous parameter values. They should be checked for consistency.
+			**/
+			AmbiguousBillingInformation,
+
+			/**
+			* \brief
+			* 	Misconfiguration of TippingSupported. 
+			**/
+			TippingNotSupported
 		};
 		
 		struct ValidationErrorCodeMapGenerator {
@@ -73,6 +85,8 @@ namespace ChipDnaClientLib {
 				map["AmountTooLarge"] = AmountTooLarge;
 				map["AmountZeroNotAllowed"] = AmountZeroNotAllowed;
 				map["InvalidParameter"] = InvalidParameter;
+				map["AmbiguousBillingInformation"] = AmbiguousBillingInformation;
+				map["TippingNotSupported"] = TippingNotSupported;
 
 				return map;
 			}

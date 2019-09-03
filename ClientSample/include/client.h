@@ -61,6 +61,7 @@ namespace ChipDNA {
 		void printReceipt(ReceiptData* receipt);
 		void performReleaseCard();
 		void performVoiceReferral();
+		void performContinueSignatureVerification();
 		void performDeferredAuthorization();
 		void performOpenPassThruSession();
 		void performClosePassthroughSession();
@@ -68,6 +69,7 @@ namespace ChipDNA {
 		void performConnectAndConfigure();
 		void performCustomCommand();
 		void cardDetailsEvent(KeyValue & list);
+		void signatureVerificationRequestedEvent(KeyValue & list);
 		void cardNotificationEvent(KeyValue & list);
 		void transactionFinishedEvent(KeyValue & list);
 		void transactionPauseEvent(KeyValue & list);

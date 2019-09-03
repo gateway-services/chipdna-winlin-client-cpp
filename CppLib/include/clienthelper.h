@@ -158,6 +158,19 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
+		*	Call ContinueSignatureVerification when the merchant has completed the signature verification process.
+		*
+		* Continues an auto-confirm transaction if signature verification is required and a {@link signatureVerificationRequestedEvent} is fired the client must call this method for transaction processing to resume. 
+		* \param parameter {@link ParameterSet}
+		* 	Parameter collection containing the following name-value pairs: <BR>
+		* 	{@link ParameterKeys.SignatureVerificationResult} Required. <BR>
+		* 	{@link ParameterKeys.Errors} Present only when error condition encountered. Values may come from {@link ParameterTokens.ValidationErrorCode}, {@link ParameterTokens.ChipDnaErrorCode} and {@link ParameterTokens.PaymentDeviceErrorCode}
+		* \return True if the command has been processed correctly by the server
+		*/
+		bool ContinueSignatureVerification(ParameterSet& parameter, ParameterSet& response);
+
+		/**
+		* \brief
 		*	Request the ChipDNA server to perform a TMS update.
 		* \param parameter {@link ParameterSet}
 		* 	Parameter collection containing the following name-value pairs: <BR>
@@ -454,6 +467,21 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
+		*	ChipDNA fires a SignatureVerificationRequested event when {@link ClientHelper.StartTransaction} has been successfully called  and an auto-confirm transaction requires signature verification. If the auto-confirm transaction requires signature verification, the EventParameters contains a parameter list with the following name-value pairs. The transaction will be Approved or Declined and a receipt can be issued for signature verification.
+		*
+		* The following parameters will be returned: <BR>
+		* If the transaction is completed the following parameters will be Present:<BR>
+		* {@link ParameterKeys.ReceiptData} Present on completion after {@link ClientHelper.CardDetailsEvent}.<BR>
+		* {@link ParameterKeys.SignatureImage} Present if signature was captured on payment device.<BR>
+		* {@link ParameterKeys.SignatureImageMediaType} Present if signature was captured on payment device.<BR>
+		* {@link ParameterKeys.Errors} Present on decline or completion pre {@link ClientHelper.CardDetailsEvent}. Values may come from from {@link ParameterTokens.ChipDnaErrorCode}, {@link PaymentEngineErrorCode} and {@link ParameterTokens.PaymentDeviceErrorCode}
+		* {@link ParameterKeys.ErrorDescription} Present only when error condition encountered and a description message is available.
+		* If the transaction is terminated The following parameters will be returned: {@link ParameterKeys.Errors}.
+		*/
+		void SignatureVerificationRequestedEvent(OnEventReceived onEventReceived);
+
+		/**
+		* \brief
 		*	Used to notify that a transaction is paused.
 		*
 		* When {@link ClientHelper.StartTransaction} has been successfully called and ChipDNA is configured to pause transactions, <BR>
@@ -603,6 +631,7 @@ namespace ChipDnaClientLib {
 		OnEventReceived transactionUpdate;
 		OnEventReceived voiceReferral;
 		OnEventReceived deferredAuthorization;
+		OnEventReceived signatureVerificationRequested;
 		OnEventReceived paymentDeviceAvailabilityChange;
 		OnEventReceived tmsUpdate;
 		OnEventReceived updateTransactionParametersFinished;
@@ -631,6 +660,7 @@ namespace ChipDnaClientLib {
 		static const std::string LINKED_REFUND_TRANSACTION;
 		static const std::string CONTINUE_VOICE_REFERRAL;
 		static const std::string CONTINUE_DEFERRED_AUTHORIZATION;
+		static const std::string CONTINUE_SIGNATURE_VERIFICATION;
 		static const std::string RELEASE_CARD;
 		static const std::string TMS_UPDATE;
 		static const std::string UPDATE_TRANSACTION_PARAMETERS_FINISHED;

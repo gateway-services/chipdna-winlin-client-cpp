@@ -316,7 +316,19 @@ namespace ChipDnaClientLib {
 			* \brief
 			* 	A call to connect and configure is required.
 			*/
-			ConnectAndConfigureRequired
+			ConnectAndConfigureRequired,
+
+			/**
+			* \brief
+			* 	Auto confirmation of transaction is not supported.
+			*/
+			AutoConfirmNotSupported,
+
+			/**
+			* \brief
+			* 	Transaction does not expect signature verification at this stage. 
+			*/
+			SignatureVerificationNotExpected
 		};
 
 		struct ChipDnaErrorCodeMapGenerator {
@@ -370,6 +382,8 @@ namespace ChipDnaClientLib {
 				map["RegistrationFailedToRetrieveTerminalId"] = RegistrationFailedToRetrieveTerminalId;
 				map["RegistrationFailedToRetrieveTrnasactionkey"] = RegistrationFailedToRetrieveTransactionKey;
 				map["ConnectionAndConfigureRequired"] = ConnectAndConfigureRequired;
+				map["AutoConfirmNotSupported"] = AutoConfirmNotSupported;
+				map["SignatureVerificationNotExpected"] = SignatureVerificationNotExpected;
 
 				return map;
 			}
