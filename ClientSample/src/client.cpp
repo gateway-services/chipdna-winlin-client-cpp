@@ -129,6 +129,7 @@ static std::string getCommandMenu( ){
 	stringStream << "L \t Continue Transaction\r\n";
 	stringStream << "F \t Continue Voice Referral\r\n";
 	stringStream << "D \t Continue Deferred Authorization\r\n";
+	stringStream << "J \t Continue Signature Verification\r\n";
 	stringStream << "I \t Transaction Information\r\n";
 	stringStream << "+ \t Toggle Client Verbose Debug\r\n";
 	stringStream << "x \t Request TMS Update\r\n";
@@ -200,6 +201,7 @@ std::string getPrintableCardHash(std::vector<CardHash> & cardHashes){
 		m_clientHelper->TransactionPauseEvent(bind(&Client::transactionPauseEvent, this, std::placeholders::_1));
 		m_clientHelper->TransactionUpdateEvent(bind(&Client::transactionUpdateEvent, this, std::placeholders::_1));
 		m_clientHelper->VoiceReferralEvent(bind(&Client::voiceReferralEvent, this, std::placeholders::_1));
+		m_clientHelper->SignatureVerificationRequestedEvent(bind(&Client::signatureVerificationRequestedEvent, this, std::placeholders::_1));
 		m_clientHelper->DeferredAuthorizationEvent(bind(&Client::deferredAuthorizationEvent, this, std::placeholders::_1));
 		m_clientHelper->ErrorEvent(bind(&Client::errorEvent, this, std::placeholders::_1));
 		m_clientHelper->PaymentDeviceAvailabilityChangeEvent(bind(&Client::paymentDeviceAvailabilityChangeEvent, this, std::placeholders::_1));
@@ -274,6 +276,9 @@ void Client::computeInput(char command){
 		break;
 	case 'L':
 		performContinueTransaction();
+		break;
+	case 'J':
+		performContinueSignatureVerification();
 		break;
 	case 'U':
 		doUpdateTransaction();
@@ -877,13 +882,34 @@ void Client::performContinueTransaction(){
 		std::string batchReference = getBatchReference();
 			transactionParms.Add(ParameterKeys::BatchReference, batchReference);
 	}
-		transactionParms += getExtraParams("ContinueTransaction");
+	transactionParms += getExtraParams("ContinueTransaction");
 	if (!m_clientHelper->ContinueTransaction(transactionParms, response)){
 		std::cout << "performContinueTransaction failed" << std::endl;
 		return;
 	}
 		if (response.ContainsKey(ParameterKeys::Errors)) {
-			std::cout << "performContinueTransaction Errors:\t" << response.GetValue(ParameterKeys::Errors);
+		std::cout << "performContinueTransaction Errors:\t" << response.GetValue(ParameterKeys::Errors);
+	}
+}
+
+
+void Client::performContinueSignatureVerification(){
+	ParameterSet transactionParms;
+	ParameterSet response;
+	
+	std::string verifySignature = getUserInput("Verify Signature [True, False]");
+	if (!verifySignature.empty()) {
+		transactionParms.Add(ParameterKeys::SignatureVerificationResult, verifySignature);
+	}
+	
+	transactionParms += getExtraParams("ContinueSignatureVerification");
+	if (!m_clientHelper->ContinueSignatureVerification(transactionParms, response)) {
+		std::cout << "performContinueSignatureVerification failed" << std::endl;
+		return;
+	}
+
+	if (response.ContainsKey(ParameterKeys::Errors)) {
+		std::cout << "performContinueSignatureVerification Errors:\t" << response.GetValue(ParameterKeys::Errors);
 	}
 }
 
@@ -1076,6 +1102,40 @@ void Client::transactionFinishedEvent(KeyValue & parameters)
 
 	resetTransaction();
 	printConsoleCommands();
+}
+
+void Client::signatureVerificationRequestedEvent(KeyValue & parameters)
+{
+	std::stringstream stringStream;
+	stringStream << "SignatureVerificationRequested: ";
+	std::string xml = getParameterValue(ParameterKeys::ReceiptData, parameters);
+	ReceiptData * ptr_receiptData = ReceiptData::GetReceiptDataFromXml(xml);
+	std::string errorDescription = "";
+	for (KeyValue::const_iterator it = parameters.begin(); it != parameters.end(); it++)
+	{
+		if (it->first.compare(ParameterKeys::ReceiptData) == 0)
+			continue;
+		std::string value = it->second;
+		if (it->first.compare(ParameterKeys::CardHashCollection) == 0){
+			std::vector<CardHash> cardHashes = CardHash::ParseCardHashFromXml(it->second);
+			value = getPrintableCardHash(cardHashes);
+		}
+
+		if (it->first.compare(ParameterKeys::ErrorDescription) == 0){
+			errorDescription = it->second;
+		}
+		stringStream << " [" << it->first << ", " << value << "] ";
+	}
+	std::cout << stringStream.str() << "\n\r" << std::endl;
+	
+	if(!errorDescription.empty()){
+		std::cout << "Error Description: " << errorDescription << "\n\r" << std::endl;
+	}
+
+	if (ptr_receiptData != NULL){
+		printReceipt(ptr_receiptData);
+		delete ptr_receiptData;
+	}
 }
 
 void Client::transactionPauseEvent(KeyValue & parameters)

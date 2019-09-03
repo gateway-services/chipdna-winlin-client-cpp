@@ -1167,11 +1167,114 @@ namespace ChipDnaClientLib {
 
 		/**
 		*\brief
+		*   Parameter key for triggering auto confirmation of a transaction.
+		*
+		* KEY = AUTO_CONFIRM
+		*/
+		static const std::string AutoConfirm;
+
+		/**
+		*\brief
 		*   Parameter key for triggering completion of background firmware update.
 		*
 		* KEY = COMPLETE_BACKGROUND_FIRMWARE_UPDATE
 		*/
 		static const std::string CompleteBackgroundFirmwareUpdate;
-	};
+
+		/**
+		*\brief
+		*   Parameter key for the Tax Amount.
+		*
+		* KEY = TAX_AMOUNT
+		*/
+		static const std::string TaxAmount;
+
+		/**
+		*\brief
+		*   Parameter key for the Purchase Order Number.
+		*
+		* KEY = PO_NUMBER
+		*/
+		static const std::string PurchaseOrderNumber;
+
+		/**
+		*\brief
+		*   Parameter key for Address Line One in Billing Information.
+		*
+		* KEY = BILLING_ADDRESS_1
+		*/
+		static const std::string BillingAddress1;
+
+		/**
+		*\brief
+		*   Parameter key for Address Line Two in Billing Information.
+		*
+		* KEY = BILLING_ADDRESS_2
+		*/
+		static const std::string BillingAddress2;
+
+		/**
+		*\brief
+		*   Parameter key for the City in Billing Information.
+		*
+		* KEY = BILLING_CITY
+		*/
+		static const std::string BillingCity;
+
+		/**
+		*\brief
+		*   Parameter key for the State in Billing Information.
+		*
+		* KEY = BILLING_STATE
+		*/
+		static const std::string BillingState;
+
+		/**
+		*\brief
+		*   Parameter key for the Postal Code in Billing Information. Can be used interchangeably with BILLING_ZIP_CODE.
+		*
+		* KEY = BILLING_POSTAL_CODE
+		*/
+		static const std::string BillingPostalCode;
+
+		/**
+		*\brief
+		*   Parameter key for the Zip Code in Billing Information. Can be used interchangeably with BILLING_POSTAL_CODE.
+		*
+		* KEY = BILLING_ZIP_CODE
+		*/
+		static const std::string BillingZipCode;
+
+		/**
+		*\brief
+		*   Parameter key for the Country in Billing Information.
+		*
+		* KEY = BILLING_COUNTRY
+		*/
+		static const std::string BillingCountry;
+
+		/**
+		*\brief
+		*   Parameter key for Email Address in Billing Information.
+		*
+		* KEY = BILLING_EMAIL_ADDRESS
+		*/
+		static const std::string BillingEmailAddress;
+
+		/**
+		*\brief
+		*   Parameter key for Phone Number in Billing Information.
+		*
+		* KEY = BILLING_PHONE_NUMBER
+		*/
+		static const std::string BillingPhoneNumber;
+
+		/**
+		*\brief
+		*   Parameter key for the result of Signature Verification.
+		*
+		* KEY = SIGNATURE_VERIFICATION_RESULT
+		*/
+		static const std::string SignatureVerificationResult;	};
 }
 #endif // PARAMETERKEYS_H

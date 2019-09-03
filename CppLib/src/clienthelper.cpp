@@ -237,6 +237,10 @@ namespace ChipDnaClientLib {
 		return tcpIpClient.StartCommand(parameter, response, identifier, CONTINUE_DEFERRED_AUTHORIZATION);
 	}
 
+	bool ClientHelper::ContinueSignatureVerification(ParameterSet & parameter, ParameterSet & response) {
+		return tcpIpClient.StartCommand(parameter, response, identifier, CONTINUE_SIGNATURE_VERIFICATION);
+	}
+
 	bool ClientHelper::StartTransaction(ParameterSet & parameter, ParameterSet & response) {
 		return tcpIpClient.StartCommand(parameter, response, identifier, START_TRANSACTION);
 	}
@@ -391,6 +395,9 @@ namespace ChipDnaClientLib {
 				else if (*event->eventType == "DeferredAuthorization" && deferredAuthorization) {
 					if (deferredAuthorization != nullptr) deferredAuthorization(params);
 				}
+				else if (*event->eventType == "SignatureVerificationRequested" && signatureVerificationRequested) {
+					if (signatureVerificationRequested != nullptr) signatureVerificationRequested(params);
+				}
 				else if (*event->eventType == "PaymentDeviceAvailabilityChange" && paymentDeviceAvailabilityChange) {
 					if (paymentDeviceAvailabilityChange != nullptr) paymentDeviceAvailabilityChange(params);
 				}
@@ -464,6 +471,10 @@ namespace ChipDnaClientLib {
 		deferredAuthorization = onEventReceived;
 	}
 
+	void ClientHelper::SignatureVerificationRequestedEvent(OnEventReceived onEventReceived) {
+		signatureVerificationRequested = onEventReceived;
+	}
+
 	void ClientHelper::CardNotificationEvent(OnEventReceived onEventReceived) {
 		cardNotification = onEventReceived;
 	}
@@ -526,6 +537,7 @@ namespace ChipDnaClientLib {
 	const std::string ClientHelper::CONTINUE_TRANSACTION = "ContinueTransaction";
 	const std::string ClientHelper::LINKED_REFUND_TRANSACTION = "LinkedRefundTransaction";
 	const std::string ClientHelper::CONTINUE_VOICE_REFERRAL = "ContinueVoiceReferral";
+	const std::string ClientHelper::CONTINUE_SIGNATURE_VERIFICATION = "ContinueSignatureVerification";
 	const std::string ClientHelper::CONTINUE_DEFERRED_AUTHORIZATION = "ContinueDeferredAuthorization";
 	const std::string ClientHelper::RELEASE_CARD = "ReleaseCard";
 	const std::string ClientHelper::TMS_UPDATE = "TmsUpdate";

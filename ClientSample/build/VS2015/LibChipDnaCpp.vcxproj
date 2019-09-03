@@ -98,13 +98,7 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>IF EXIST "C:\\Program Files\\TortoiseSVN\\bin\\SubWCRev.exe" (
-	IF EXIST "$(SolutionDir)\\..\\..\\..\\..\\set_chipdna_version_data.pl" (
-		IF EXIST "C:\\strawberry\\perl\\bin\\perl.exe" (
-			"C:\\strawberry\\perl\\bin\\perl.exe" -x"$(SolutionDir)\\..\\..\\..\\..\\" "$(SolutionDir)\\..\\..\\..\\..\\set_chipdna_version_data.pl" target=cpplib
-		)
-	) 
-) </Command>
+      <Command> </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
