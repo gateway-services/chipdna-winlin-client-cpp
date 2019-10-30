@@ -831,7 +831,7 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
-		* 	Parameter key for zip code verification result.
+		* 	Parameter key for zip code verification result. Value can be Empty, Matched, NotChecked, NotMatched, NotSupplied or PartialMatch
 		*
 		* KEY = ZIP_CODE_VERIFICATION_RESULT
 		**/
