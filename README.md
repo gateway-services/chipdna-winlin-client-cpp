@@ -1,6 +1,8 @@
 # chipdna-winlin-client-cpp
 C++ client for ChipDNA
-This client library gives developers a secure TCP/IP interface to ChipDNA server, and is designed for integration with a Point of Sale solution. This repository contains source code for both the C++ client library and an interactive sample client executable. 
+This client library gives developers a secure TCP/IP interface to ChipDNA server, and is designed for integration with a Point of Sale solution. This repository contains source code for both the C++ client library and an interactive sample client executable.
+
+This is a test
 
 ## Setup
 ### Visual Studio
@@ -22,5 +24,5 @@ The Makefile assumes that the OpenSSL and POSIX Threads (pthreads) development p
   ![](start_transaction.png)
 
 ## Documentation
-The client library uses doxygen for API documentation. You can generate documentation with the command: 
+The client library uses doxygen for API documentation. You can generate documentation with the command:
 `doxy ~/ChipDnaClient/ClientLib/docs/Doxygen`
