@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 		std::cout << "Configuration file is in not correct format or not found" << std::endl;
 		std::cout << "Please Ensure you are passing in: ";
 		std::cout << IDENTIFIER << " (Required), " << SOCKETDATA << "(Optional), " << SAVE_RECEIPT << "(Optional)," << PROVIDER_NAME << "(Optional)," << std::endl;
-	    printPause(EXIT_MESSAGE);
+		printPause(EXIT_MESSAGE);
 		return 1;		
 	}
 

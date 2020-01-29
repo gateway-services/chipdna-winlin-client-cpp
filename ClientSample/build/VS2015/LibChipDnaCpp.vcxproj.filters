@@ -143,6 +143,15 @@
     <ClInclude Include="..\..\..\CppLib\include\voidreason.h">
       <Filter>Header Files\ParameterTokens</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\merchantdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\transactiontypeid.h">
+      <Filter>Header Files\ParameterTokens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CppLib\include\merchant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\CppLib\src\cardhash.cpp">
@@ -188,6 +197,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\CppLib\src\xmlrequest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\merchantdata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\merchant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

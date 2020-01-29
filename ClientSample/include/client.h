@@ -57,6 +57,7 @@ namespace ChipDNA {
 		void doUpdateTransaction();
 		void performTerminateTransaction();
 		void getStatus();
+		void getMerchantData();
 		void getCardStatus();
 		void printReceipt(ReceiptData* receipt);
 		void performReleaseCard();

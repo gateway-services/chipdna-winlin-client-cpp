@@ -8,8 +8,11 @@
 #include <functional>
 #include "parameterset.h"
 #include "response.h"
+#include <time.h>
+
 
 #ifndef CHIPDNAREFERENCE_H
+
 
 typedef std::map<std::string, std::string> KeyValue;
 typedef std::function<void(KeyValue & parameters)> OnEventReceived;
@@ -127,6 +130,18 @@ namespace ChipDnaClientLib {
 		* \return True if the command has been processed correctly by the server
 		*/
 		bool GetStatus(ParameterSet& parameter, ParameterSet& response);
+
+		/**
+		* \brief
+		*	Get all Merchant data in a single call.
+		* \param parameter {@link ParameterSet} Container to use as request container
+		* \param response  {@link ParameterSet} The parameter collection does not currently take any values.
+		* 	Parameter collection containing the following name-value pairs: <BR>
+		*   {@link ParameterKeys.MerchantData} Present on no error. <BR>
+		* 	{@link ParameterKeys.Errors} Present only when error condition encountered. Values may come from {@link ParameterTokens.ChipDnaErrorCode}.
+		* \return True if the command has been processed correctly by the server
+		*/
+		bool GetMerchantData(ParameterSet& parameter, ParameterSet& response);
 
 		/**
 		* \brief
@@ -407,7 +422,12 @@ namespace ChipDnaClientLib {
 		*
 		* \param parameter The parameter collection currently doesn't take any value.
 		* \param response {@link ParameterSet} with parameter collection <BR>
-		*         {@link ParameterKeys.Errors} Present only when error condition encountered. Values may come from {@link ParameterTokens.ChipDnaErrorCode}
+		*
+		
+		
+		
+		
+		{@link ParameterKeys.Errors} Present only when error condition encountered. Values may come from {@link ParameterTokens.ChipDnaErrorCode}
 		* \return True if the command has been processed correctly by the server
 		*/
 		bool ConnectAndConfigure(ParameterSet& parameter, ParameterSet& response);
@@ -585,9 +605,9 @@ namespace ChipDnaClientLib {
 		*	When connectAndConfigure has completed this event will be fired with the result.
 		*
 		* \param onEventReceived
-		*            The following parameters will be returned: <BR>
-		*            {@link ParameterKeys.ConnectAndConfigureResult} Always Present.<BR>
-		*            {@link ParameterKeys.Errors} Present if errors were encountered. {@link PaymentEngineErrorCode} {@link ParameterTokens.ChipDnaErrorCode}
+		* The following parameters will be returned: <BR>
+		* {@link ParameterKeys.ConnectAndConfigureResult} Always Present.<BR>
+		* {@link ParameterKeys.Errors} Present if errors were encountered. {@link PaymentEngineErrorCode} {@link ParameterTokens.ChipDnaErrorCode}
 		*/
 		void ConnectAndConfigureEvent(OnEventReceived onEventReceived);
 
@@ -649,6 +669,7 @@ namespace ChipDnaClientLib {
 		static const std::string GET_VERSION;
 		static const std::string SET_IDLE_MESSAGE;
 		static const std::string GET_STATUS;
+		static const std::string GET_MERCHANT_DATA;
 		static const std::string GET_TRANSACTION_INFORMATION;
 		static const std::string TERMINATE_TRANSACTION;
 		static const std::string CONFIRM_TRANSACTION;

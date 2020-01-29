@@ -6,7 +6,7 @@
 namespace ChipDnaClientLib {
 
 	namespace ParameterTokens {
-		
+
 		/**
 		* \brief
 		*	Card Scheme Values
@@ -16,102 +16,102 @@ namespace ChipDnaClientLib {
 			* \brief
 			*	Other.
 			*/
-			Other,
+			Other = 0,
 
 			/**
 			* \brief
 			*	Visa.
 			*/
-			Visa,
+			Visa = 1,
 
 			/**
 			* \brief
 			*	MasterCard.
 			*/
-			MasterCard,
+			MasterCard = 2,
 
 			/**
 			* \brief
 			*	Maestro.
 			*/
-			Maestro,
+			Maestro = 3,
 
 			/**
 			* \brief
 			*	Amex.
 			*/
-			Amex,
+			Amex = 4,
 
 			/**
 			* \brief
 			*	Jcb.
 			*/
-			Jcb,
+			Jcb = 5,
 
 			/**
 			* \brief
 			*	Diners.
 			*/
-			Diners,
+			Diners = 6,
 
 			/**
 			* \brief
 			*	Discover.
 			*/
-			Discover,
+			Discover = 7,
 
 			/**
 			* \brief
 			*	Carte Bleue.
 			*/
-			CarteBleue,
+			CarteBleue = 8,
 
 			/**
 			* \brief
 			*	Carte Blanc.
 			*/
-			CarteBlanc,
+			CarteBlanc = 9,
 
 			/**
 			* \brief
 			*	Voyager.
 			*/
-			Voyager,
+			Voyager = 10,
 
 			/**
 			* \brief
 			*	Wex.
 			*/
-			Wex,
+			Wex = 11,
 
 			/**
 			* \brief
-			*	China Union Pay.*/
-			ChinaUnionPay,
+			*	Union Pay.*/
+			UnionPay = 12,
 
 			/**
 			* \brief
 			*	Style.
 			*/
-			Style,
+			Style = 100,
 
 			/**
 			* \brief
 			*	Value Link.
 			*/
-			ValueLink,
+			ValueLink = 101,
 
 			/**
 			* \brief
 			*	Interac
 			*/
-			Interac,
+			Interac = 1241,
 
 			/**
 			* \brief
 			*	Laser.
 			*/
-			Laser
+			Laser = 3721
 		};
 
 		struct CardSchemeIdMapGenerator {
@@ -123,17 +123,41 @@ namespace ChipDnaClientLib {
 				map["Maestro"] = Maestro;
 				map["Amex"] = Amex;
 				map["Jcb"] = Jcb;
-				map["Diner"] = Diners;
+				map["Diners"] = Diners;
 				map["Discover"] = Discover;
 				map["CarteBleue"] = CarteBleue;
 				map["CarteBlanc"] = CarteBlanc;
 				map["Voyager"] = Voyager;
 				map["Wex"] = Wex;
-				map["ChinaUnionPay"] = ChinaUnionPay;
+				map["UnionPay"] = UnionPay;
 				map["Style"] = Style;
 				map["ValueLink"] = ValueLink;
 				map["Interac"] = Interac;
 				map["Laser"] = Laser;
+				return map;
+			}
+		};
+
+		struct CardSchemeIdMapIndex {
+			static std::map<int, CardSchemeId> CreateMap() {
+				std::map<int, CardSchemeId> map;
+				map[0] = Other;
+				map[1] = Visa;
+				map[2] = MasterCard;
+				map[3] = Maestro;
+				map[4] = Amex;
+				map[5] = Jcb;
+				map[6] = Diners;
+				map[7] = Discover;
+				map[8] = CarteBleue;
+				map[9] = CarteBlanc;
+				map[10] = Voyager;
+				map[11] = Wex;
+				map[12] = UnionPay;
+				map[100] = Style;
+				map[101] = ValueLink;
+				map[1241] = Interac;
+				map[3721] = Laser;
 				return map;
 			}
 		};
@@ -143,6 +167,8 @@ namespace ChipDnaClientLib {
 		*	Converts a string to a {@link CardSchemeId} value.
 		*/
 		const std::map<std::string, CardSchemeId> StringToCardSchemeId = CardSchemeIdMapGenerator::CreateMap();
+		const std::map<int, CardSchemeId> IntToCardSchemeId = CardSchemeIdMapIndex::CreateMap();
+
 	}
 }
 #endif
