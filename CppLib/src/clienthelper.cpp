@@ -229,6 +229,10 @@ namespace ChipDnaClientLib {
 		return tcpIpClient.StartCommand(parameter, response, identifier, GET_STATUS);
 	}
 
+	bool ClientHelper::GetMerchantData(ParameterSet & parameter, ParameterSet & response) {
+		return tcpIpClient.StartCommand(parameter, response, identifier, GET_MERCHANT_DATA);
+	}
+
 	bool ClientHelper::ContinueVoiceReferral(ParameterSet & parameter, ParameterSet & response) {
 		return tcpIpClient.StartCommand(parameter, response, identifier, CONTINUE_VOICE_REFERRAL);
 	}
@@ -527,6 +531,7 @@ namespace ChipDnaClientLib {
 	const std::string ClientHelper::GET_VERSION = "GetVersion";
 	const std::string ClientHelper::SET_IDLE_MESSAGE = "SetIdleMessage";
 	const std::string ClientHelper::GET_STATUS = "GetStatus";
+	const std::string ClientHelper::GET_MERCHANT_DATA = "GetMerchantData";
 	const std::string ClientHelper::GET_TRANSACTION_INFORMATION = "GetTransactionInformation";
 	const std::string ClientHelper::TERMINATE_TRANSACTION = "TerminateTransaction";
 	const std::string ClientHelper::CONFIRM_TRANSACTION = "ConfirmTransaction";

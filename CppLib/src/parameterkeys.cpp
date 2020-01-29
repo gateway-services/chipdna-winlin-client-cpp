@@ -64,6 +64,8 @@ namespace ChipDnaClientLib {
 
 	const std::string ParameterKeys::MerchantName = "MERCHANT_NAME";
 
+	const std::string ParameterKeys::MerchantData = "MERCHANT_DATA";
+
 	const std::string ParameterKeys::MerchantIdMasked = "MERCHANT_ID_MASKED";
 
 	const std::string ParameterKeys::Notification = "NOTIFICATION";
@@ -111,8 +113,6 @@ namespace ChipDnaClientLib {
 	const std::string ParameterKeys::Track2ClearText = "TRACK2_CLEAR_TEXT";
 
 	const std::string ParameterKeys::Track2Masked = "TRACK2_MASKED";
-
-	const std::string ParameterKeys::TerminalLanguage = "TERMINAL_LANGUAGE";
 
 	const std::string ParameterKeys::TotalAmount = "TOTAL_AMOUNT";
 

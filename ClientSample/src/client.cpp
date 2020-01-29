@@ -6,10 +6,13 @@
 #include <fstream>
 #include <time.h>
 #include <map>
+#include <string>
+
 
 #include "parameterkeys.h"
 #include "parameterset.h"
 #include "chipdnastatus.h"
+#include "merchantdata.h"
 #include "cardhash.h"
 #include "cardstatus.h"
 #include "clienthelper.h"
@@ -118,6 +121,7 @@ static std::string getCommandMenu( ){
 	stringStream << std::endl;
 	stringStream << "S \t Current Status\r\n";
 	stringStream << "N \t Get Card Status\r\n";
+	stringStream << "W \t Get Merchant Data\r\n";
 	stringStream << "M \t Set Idle Message on Supported PED\r\n";
 	stringStream << "R \t Process Refund By Reference\r\n";
 	stringStream << "P \t Start Transaction\r\n";
@@ -293,6 +297,9 @@ void Client::computeInput(char command){
 	case 'S':
 		getStatus();
 		break;
+	case 'W':
+		getMerchantData();
+		break;
 	case 'N':
 		getCardStatus();
 		break;
@@ -339,16 +346,35 @@ void Client::getStatus() {
 	parameter += getExtraParams("GetStatus"); 
 	ParameterSet parameters = getRequestedParameterSet(parameter);
 	if (m_clientHelper->GetStatus(parameters, response)) {
-			auto statusData = ChipDnaStatus::ParseFromResponse(response);
+		auto statusData = ChipDnaStatus::ParseFromResponse(response);
 		
-			if (!response.ContainsKey(ParameterKeys::Errors)) {
-				std::cout << statusData->ToString() << std::endl;
+		if (!response.ContainsKey(ParameterKeys::Errors)) {
+			std::cout << statusData->ToString() << std::endl;
 			delete statusData;
 		}
 		else {
-				std::cout << response.ToString() << std::endl;
+			std::cout << response.ToString() << std::endl;
 			delete statusData;
 		}
+	}
+}
+
+void Client::getMerchantData() {
+
+	ParameterSet parameter;
+	ParameterSet response;
+
+	ParameterSet parameters;
+	if (m_clientHelper->GetMerchantData(parameters, response)) {
+		auto merchantData = MerchantData::ParseFromResponse(response);
+		
+		if (response.ContainsKey(ParameterKeys::Errors)) { 
+			std::cout << response.ToString() << std::endl;
+		}
+		else {
+			std::cout << merchantData->ToString() << std::endl;
+		}
+		delete merchantData;
 	}
 }
 
@@ -364,14 +390,14 @@ void Client::getCardStatus() {
 
 		parameters += getExtraParams("GetCardStatus");
 	if (m_clientHelper->GetCardStatus(parameters, response)){
-			auto cardStatusData = CardStatus::ParseFromResponse(response);
-
-			if (!response.ContainsKey(ParameterKeys::Errors)) {
-				std::cout << cardStatusData->ToString() << std::endl;
+		auto cardStatusData = CardStatus::ParseFromResponse(response);
+		
+		if (!response.ContainsKey(ParameterKeys::Errors)) {
+			std::cout << cardStatusData->ToString() << std::endl;
 			delete cardStatusData;
 		}
 		else {
-				std::cout << response.ToString() << std::endl;
+			std::cout << response.ToString() << std::endl;
 		}
 	}
 }
@@ -395,18 +421,18 @@ void Client::requestTmsUpdate(){
 
 		parameter += getExtraParams("RequestTmsUpdate");
 	if (m_clientHelper->RequestTmsUpdate(parameter, response)){
-			if (response.ContainsKey(ParameterKeys::Errors))
-			{
-				std::cout << "requestTmsUpdate Errors:\t" << response.GetValue(ParameterKeys::Errors);
-	}
-	else{
-				std::cout << response.ToString() << std::endl;
-	}
-}
+		if (response.ContainsKey(ParameterKeys::Errors))
+		{
+			std::cout << "requestTmsUpdate Errors:\t" << response.GetValue(ParameterKeys::Errors);
+		}
 		else {
-			std::cout << "requestTmsUpdate failed" << std::endl;
+			std::cout << response.ToString() << std::endl;
 		}
 	}
+	else {
+		std::cout << "requestTmsUpdate failed" << std::endl;
+	}
+}
 
 void Client::performStartTransaction()
 {

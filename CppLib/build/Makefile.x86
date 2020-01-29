@@ -17,6 +17,8 @@ LIBCHIPDNACLIENT_SRC_ = \
 	clientbase.cpp \
 	clienthelper.cpp \
 	libraryversion.cpp \
+	merchantdata.cpp \
+	merchant.cpp \
 	parameter.cpp \
 	parameterkeys.cpp \
 	parameterset.cpp \

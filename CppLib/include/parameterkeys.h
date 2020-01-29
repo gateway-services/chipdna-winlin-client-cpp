@@ -271,7 +271,15 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
-		* 	Parameter key for the merchant ID.
+		* 	Parameter key for all merchant data accounts in XML format representing {@link MerchantData}.
+		*
+		* KEY = MERCHANT_DATA
+		*/
+		static const std::string MerchantData;
+		
+		/**
+		* \brief
+		* 	Parameter key for the merchant ID, masked. Value is masked except the last 4 digits.
 		*
 		* KEY = MERCHANT_ID_MASKED
 		*/
@@ -497,15 +505,6 @@ namespace ChipDnaClientLib {
 		* KEY = TRACK2_MASKED
 		*/
 		static const std::string Track2Masked;
-
-		/**
-		* \brief
-		*	Parameter key for the payment device language.
-		*
-		* Valid values are three letter language codes from ISO 639-2. <br/>
-		* KEY = TERMINAL_LANGUAGE
-		*/
-		static const std::string TerminalLanguage;
 
 		/**
 		* \brief

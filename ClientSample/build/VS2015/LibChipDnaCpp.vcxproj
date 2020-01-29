@@ -115,6 +115,8 @@
     <ClInclude Include="..\..\..\CppLib\include\configurationupdate.h" />
     <ClInclude Include="..\..\..\CppLib\include\deferredauthorizationreason.h" />
     <ClInclude Include="..\..\..\CppLib\include\libraryversion.h" />
+    <ClInclude Include="..\..\..\CppLib\include\merchant.h" />
+    <ClInclude Include="..\..\..\CppLib\include\merchantdata.h" />
     <ClInclude Include="..\..\..\CppLib\include\parameter.h" />
     <ClInclude Include="..\..\..\CppLib\include\parameterkeys.h" />
     <ClInclude Include="..\..\..\CppLib\include\parameterset.h" />
@@ -140,6 +142,7 @@
     <ClInclude Include="..\..\..\CppLib\include\tmsupdatetype.h" />
     <ClInclude Include="..\..\..\CppLib\include\transactionsource.h" />
     <ClInclude Include="..\..\..\CppLib\include\transactiontype.h" />
+    <ClInclude Include="..\..\..\CppLib\include\transactiontypeid.h" />
     <ClInclude Include="..\..\..\CppLib\include\updatetransactionfinishederrorcode.h" />
     <ClInclude Include="..\..\..\CppLib\include\validationerrorcode.h" />
     <ClInclude Include="..\..\..\CppLib\include\voidreason.h" />
@@ -152,6 +155,8 @@
     <ClCompile Include="..\..\..\CppLib\src\clientbase.cpp" />
     <ClCompile Include="..\..\..\CppLib\src\clienthelper.cpp" />
     <ClCompile Include="..\..\..\CppLib\src\libraryversion.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\merchant.cpp" />
+    <ClCompile Include="..\..\..\CppLib\src\merchantdata.cpp" />
     <ClCompile Include="..\..\..\CppLib\src\parameter.cpp" />
     <ClCompile Include="..\..\..\CppLib\src\parameterkeys.cpp" />
     <ClCompile Include="..\..\..\CppLib\src\parameterset.cpp" />
