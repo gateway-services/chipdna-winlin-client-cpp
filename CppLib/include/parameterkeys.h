@@ -327,6 +327,14 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
+		* 	Parameter key for the PAR (Primary Account Reference). It has a length of 29 alphanumeric characters.
+		*
+		* KEY = PAR
+		*/
+		static const std::string Par;
+
+		/**
+		* \brief
 		* 	Parameter key for payment platform status. The status of the Creditcall payment gateway in XML format representing{@link ChipDnaStatus.PaymentPlatformStatus}.
 		*
 		* KEY = PAYMENT_PLATFORM_STATUS
