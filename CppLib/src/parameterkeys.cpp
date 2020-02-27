@@ -78,6 +78,8 @@ namespace ChipDnaClientLib {
 
 	const std::string ParameterKeys::PanSequence = "PAN_SEQUENCE";
 
+	const std::string ParameterKeys::Par = "PAR";
+
 	const std::string ParameterKeys::PaymentPlatformStatus = "PAYMENT_PLATFORM_STATUS";
 
 	const std::string ParameterKeys::PaymentDeviceStatus = "PAYMENT_DEVICE_STATUS";
