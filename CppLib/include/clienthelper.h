@@ -364,6 +364,8 @@ namespace ChipDnaClientLib {
 		* 	{@link ParameterKeys.CardEaseReferenceStage2} Present if confirm or void was submitted online.<BR>
 		* 	{@link ParameterKeys.CardHash} Present if transaction was submitted online.<BR>
 		* 	{@link ParameterKeys.CardReference} Present if transaction was submitted online.<BR>
+		* 	{@link ParameterKeys.CustomerVaultId} Present if available from the Omni Platform.<BR>
+		* 	{@link ParameterKeys.TransactionId} Present if available from the Omni Platform and if authorization was submitted online.<BR>
 		* 	<b>Present if transaction was not found or invalid input parameters were provided</b>, returns Response with a parameter collection containing the following name-value pairs:
 		* 	{@link ParameterKeys.Errors} Present only when error condition encountered. Values may come from {@link ParameterTokens.ValidationErrorCode}, {@link ParameterTokens.ChipDnaErrorCode} and {@link PaymentEngineErrorCode}.
 		* \return True if the command has been processed correctly by the server
