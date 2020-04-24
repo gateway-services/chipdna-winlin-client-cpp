@@ -223,7 +223,7 @@ namespace ChipDnaClientLib {
 		
 		/**
 		* \brief
-		*	Parameter key for error description from the omni-platform where available.
+		*	Parameter key for error description from the Omni Platform where available.
 		*
 		* KEY = ERROR_DESCRIPTION
 		*/
