@@ -748,7 +748,7 @@ void Client::printReceipt(ReceiptData * receipt){
 				stringStream << items[i].Label << " : ";
 			stringStream << items[i].Value << "\n\r";
 	}
-	stringStream << "\n\r" << headerFooter;
+	stringStream << "\n\r" << headerFooter << std::endl;
 	std::cout << stringStream.str();
 	if (saveReceipt){
 		const std::string currentPath = getCurrentPath();
@@ -923,7 +923,7 @@ void Client::performContinueSignatureVerification(){
 	ParameterSet transactionParms;
 	ParameterSet response;
 	
-	std::string verifySignature = getUserInput("Verify Signature [True, False]");
+	std::string verifySignature = getUserInput("Verify Signature? (Required) [True,False]");
 	if (!verifySignature.empty()) {
 		transactionParms.Add(ParameterKeys::SignatureVerificationResult, verifySignature);
 	}
@@ -1132,8 +1132,8 @@ void Client::transactionFinishedEvent(KeyValue & parameters)
 
 void Client::signatureVerificationRequestedEvent(KeyValue & parameters)
 {
-	std::stringstream stringStream;
-	stringStream << "SignatureVerificationRequested: ";
+	std::stringstream stringStream, eventParams;
+	stringStream << "Signature Verification Requested Event Parameters: ";
 	std::string xml = getParameterValue(ParameterKeys::ReceiptData, parameters);
 	ReceiptData * ptr_receiptData = ReceiptData::GetReceiptDataFromXml(xml);
 	std::string errorDescription = "";
@@ -1150,8 +1150,11 @@ void Client::signatureVerificationRequestedEvent(KeyValue & parameters)
 		if (it->first.compare(ParameterKeys::ErrorDescription) == 0){
 			errorDescription = it->second;
 		}
-		stringStream << " [" << it->first << ", " << value << "] ";
+		eventParams << " [" << it->first << ", " << value << "] ";
 	}
+
+	stringStream << (eventParams.str().length() == 0 ? "[There are no set parameters for this event]" : eventParams.str());
+
 	std::cout << stringStream.str() << "\n\r" << std::endl;
 	
 	if(!errorDescription.empty()){
@@ -1162,6 +1165,8 @@ void Client::signatureVerificationRequestedEvent(KeyValue & parameters)
 		printReceipt(ptr_receiptData);
 		delete ptr_receiptData;
 	}
+
+	std::cout << "*Waiting for Continue Signature Verification Command --> Press 'J' To Continue*" << std::endl ;
 }
 
 void Client::transactionPauseEvent(KeyValue & parameters)

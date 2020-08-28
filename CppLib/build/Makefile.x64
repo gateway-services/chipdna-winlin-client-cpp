@@ -1,5 +1,6 @@
 LIBOPENSSL_INC = /usr/include/
-CPP_ROOTPATH = /usr/lib/gcc/x86_64-linux-gnu/5.4.0
+CPP_ROOTPATH = /usr/lib/gcc/x86_64-linux-gnu
+CPP_VERSION = 5.4.0
 CPP_COMPILE = g++ -m64
 CPP_LIB_NAME = libstdc++
 CFLAGS = 
@@ -44,8 +45,8 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 	
 libchipdnaclient : $(OBJDIR) $(LIBCHIPDNACLIENT_OBJ)
-	cd $(OBJ_DIR) && ar x $(CPP_ROOTPATH)/$(CPP_LIB_NAME).a
-	ar rcs $(LIBCHIPDNACLIENT_LIBNAME) $(OBJ_DIR)/*.o $(LIBCHIPDNACLIENT_OBJ)
+	cd $(OBJ_DIR) && $(AR) x $(CPP_ROOTPATH)/$(CPP_VERSION)/$(CPP_LIB_NAME).a
+	$(AR) rcs $(LIBCHIPDNACLIENT_LIBNAME) $(OBJ_DIR)/*.o $(LIBCHIPDNACLIENT_OBJ)
 
 clean :
 	rm -f $(OBJ_DIR)/*.o $(LIBCHIPDNACLIENT_OBJ) $(LIBCHIPDNACLIENT_LIBNAME)
