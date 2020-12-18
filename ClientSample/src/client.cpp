@@ -320,7 +320,7 @@ void Client::computeInput(char command){
 		performOpenPassThruSession();
 		break;
 	case 'E':
-		performClosePassthroughSession();
+		performClosePassThruSession();
 		break;
 	case 'H':
 		performSendPassThruCommand();
@@ -382,7 +382,7 @@ void Client::getCardStatus() {
 	ParameterSet parameters;
 	ParameterSet response;
 
-	std::string cardNotificationEvents = getUserInput("Enter CardNotificationEvents [Transactions,Always] (Optional)");
+	std::string cardNotificationEvents = getUserInput("Enter cardNotificationEvents [Transactions,Always] (Optional)");
 
 	// Optional.
 	if (!cardNotificationEvents.empty())
@@ -587,10 +587,10 @@ void Client::performCustomCommand(){
 	ParameterSet  response;		
 	if (m_clientHelper->CustomCommand(transactionParms, response)){
 			if (response.ContainsKey(ParameterKeys::Errors))
-				std::cout << "customCommand Errors:\t" << response.GetValue(ParameterKeys::Errors);
+				std::cout << "performCustomCommand Errors:\t" << response.GetValue(ParameterKeys::Errors);
 	}
 	else 
-			std::cout << "customCommand failed" << std::endl;
+			std::cout << "performCustomCommand failed" << std::endl;
 }
 
 void Client::performRefundTransactionByReference(){
@@ -644,7 +644,7 @@ void Client::performConfirmTransaction(){
 	}
 		transactionValues += getExtraParams("ConfirmTransaction");
 	if (!m_clientHelper->ConfirmTransaction(transactionValues, response)){
-		std::cout << "performRefundTransactionByReference failed" << std::endl;
+		std::cout << "performConfirmTransaction failed" << std::endl;
 		return;
 	}
 		if (response.ContainsKey(ParameterKeys::TransactionResult)) {
@@ -725,7 +725,7 @@ void Client::performGetTransactionInformation(){
 		return;
 	}
 		if (response.ContainsKey(ParameterKeys::Errors)) {
-			std::cout << "Perform Get Transaction Information" << response.GetValue(ParameterKeys::Errors);
+			std::cout << "performGetTransactionInformation Errors:\t" << response.GetValue(ParameterKeys::Errors);
 	}
 	else
 			std::cout << response.ToString() << std::endl;
@@ -778,7 +778,7 @@ void Client::performConnectAndConfigure() {
 		return;
 	}
 		if (response.ContainsKey(ParameterKeys::Errors)) {
-			std::cout << "Perform Connect And Configure" << response.GetValue(ParameterKeys::Errors);
+			std::cout << "performConnectAndConfigure Errors:\t" << response.GetValue(ParameterKeys::Errors);
 	}
 	else
 			std::cout << response.ToString() << std::endl;
@@ -793,7 +793,7 @@ void Client::performReleaseCard(){
 		return;
 	}
 		if (response.ContainsKey(ParameterKeys::Errors)) {
-			std::cout << "performReleaseCard" << response.GetValue(ParameterKeys::Errors);
+			std::cout << "performReleaseCard Errors:\t" << response.GetValue(ParameterKeys::Errors);
 	}
 }
 
@@ -1027,7 +1027,7 @@ void Client::performOpenPassThruSession(){
 	}
 }
 
-void Client::performClosePassthroughSession(){
+void Client::performClosePassThruSession(){
 	ParameterSet param;
 
 	std::string input = getUserInput("\r\nEnter payment device ID");
@@ -1036,11 +1036,11 @@ void Client::performClosePassthroughSession(){
 
 	ParameterSet response;
 	if (!m_clientHelper->ClosePassThruSession(param, response)){
-		std::cout << "performClosePassthroughSession failed" << std::endl;
+		std::cout << "performClosePassThruSession failed" << std::endl;
 		return;
 	}
 		if (response.ContainsKey(ParameterKeys::Errors)) {
-			std::cout << "performClosePassthroughSession " << response.GetValue(ParameterKeys::Errors);
+			std::cout << "performClosePassThruSession Errors:\t" << response.GetValue(ParameterKeys::Errors);
 	}
 }
 
@@ -1080,7 +1080,7 @@ void Client::cardDetailsEvent(KeyValue & parameters)
 
 		
 	}
-	std::cout << "CardDetailsEvent: " << stringStream.str() << "\n\r" << std::endl;
+	std::cout << "cardDetailsEvent: " << stringStream.str() << "\n\r" << std::endl;
 
 	getCardDetailsInProgress = false;
 	printConsoleCommands();
@@ -1088,7 +1088,7 @@ void Client::cardDetailsEvent(KeyValue & parameters)
 
 void Client::cardNotificationEvent(KeyValue & parameters)
 {
-	std::cout << "CardNotificationEvent: " << printParameters(parameters) << "\n\r" << std::endl;
+	std::cout << "cardNotificationEvent: " << printParameters(parameters) << "\n\r" << std::endl;
 }
 
 void Client::transactionFinishedEvent(KeyValue & parameters)
@@ -1171,13 +1171,13 @@ void Client::signatureVerificationRequestedEvent(KeyValue & parameters)
 
 void Client::transactionPauseEvent(KeyValue & parameters)
 {
-	std::cout << "TransactionPauseEvent: " << printParameters(parameters) << "\n\r" << std::endl;
+	std::cout << "transactionPauseEvent: " << printParameters(parameters) << "\n\r" << std::endl;
 	std::cout << "Press l to continue transaction" << std::endl;
 }
 
 void Client::transactionUpdateEvent(KeyValue & parameters)
 {
-	std::cout << "TransactionUpdateEvent: " << printParameters(parameters) << "\n\r" << std::endl;
+	std::cout << "transactionUpdateEvent: " << printParameters(parameters) << "\n\r" << std::endl;
 }
 
 void Client::voiceReferralEvent(KeyValue & parameters)
@@ -1257,7 +1257,7 @@ void Client::configurationUpdateEvent(KeyValue & parameters) {
 
 void Client::dccRateInformationEvent(KeyValue & parameters)
 {
-	std::cout << "DccRateInformationEvent: " << printParameters(parameters) << "\n\r" << std::endl;
+	std::cout << "dccRateInformationEvent: " << printParameters(parameters) << "\n\r" << std::endl;
 }
 void Client::errorEvent(std::string & details)
 {
