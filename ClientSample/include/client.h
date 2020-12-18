@@ -65,7 +65,7 @@ namespace ChipDNA {
 		void performContinueSignatureVerification();
 		void performDeferredAuthorization();
 		void performOpenPassThruSession();
-		void performClosePassthroughSession();
+		void performClosePassThruSession();
 		void performSendPassThruCommand();
 		void performConnectAndConfigure();
 		void performCustomCommand();

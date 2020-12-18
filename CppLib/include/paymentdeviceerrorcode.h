@@ -474,6 +474,12 @@
 			* 	The transaction cannot continue because the presented card is a whitelisted non-payment card.
 			**/
 			WhitelistedCardPresented,
+
+			/**
+			* \brief
+			* 	Online PIN key is missing, transaction requiring Online PIN cannot be carried out.
+			**/
+			OnlinePinKeyMissing,
 		};
 
 		struct PaymentDeviceErrorCodeMapGenerator {
@@ -556,6 +562,7 @@
 				map["PaymentDeviceCommandNotAllowed"] = PaymentDeviceCommandNotAllowed;
 				map["PassThruConfigMissing"] = PassThruConfigMissing;
 				map["WhitelistedCardPresented"] = WhitelistedCardPresented;
+				map["OnlinePinKeyMissing"] = OnlinePinKeyMissing;
 
 				return map;
 			}
