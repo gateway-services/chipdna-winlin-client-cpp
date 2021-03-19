@@ -1,6 +1,7 @@
 #ifndef SOURCE_H
 #define SOURCE_H
 
+#include <string>
 #include <map>
 
 namespace ChipDnaClientLib {

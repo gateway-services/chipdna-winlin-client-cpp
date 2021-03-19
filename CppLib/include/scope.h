@@ -1,6 +1,7 @@
 #ifndef SCOPE_H
 #define SCOPE_H
 
+#include <string>
 #include <map>
 
 namespace ChipDnaClientLib {
