@@ -16,20 +16,13 @@ namespace ChipDnaClientLib {
 			* \brief
 			* 	Pause state occurring after card details collected.
 			*/
-			PostCardDetails,
-
-			/**
-			* \brief
-			* 	Pause state occurring before online authorization request.
-			*/
-			PreOnlineAuthorization
+			PostCardDetails
 		};
 
 		struct PauseTransactionStateMapGenerator {
 			static std::map<std::string, PauseTransactionState> CreateMap() {
 				std::map<std::string, PauseTransactionState> map;
 				map["PostCardDetails"] = PostCardDetails;
-				map["PreOnlineAuthorization"] = PreOnlineAuthorization;
 				return map;
 			}
 		};
