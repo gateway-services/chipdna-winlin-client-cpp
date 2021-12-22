@@ -4,6 +4,7 @@ CPP_ROOTPATH = /usr/lib/gcc-cross/arm-linux-gnueabi
 CPP_VERSION = 5.4.0
 CPP_COMPILE = arm-linux-gnueabi-g++
 CPP_LIB_NAME = libstdc++
+CPP_LIB_PATH = $(CPP_ROOTPATH)/$(CPP_VERSION)/$(CPP_LIB_NAME).a
 CFLAGS =
 LFLAGS = -L/usr/arm-linux-gnueabi/lib
 OBJ_DIR = obj-arm
@@ -46,7 +47,7 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 libchipdnaclient : $(LIBCHIPDNACLIENT_OBJ)
-	cd $(OBJ_DIR) && $(AR) x $(CPP_ROOTPATH)/$(CPP_VERSION)/$(CPP_LIB_NAME).a
+	cd $(OBJ_DIR) && $(AR) x $(CPP_LIB_PATH)
 	$(AR) rcs $(LIBCHIPDNACLIENT_LIBNAME) $(OBJ_DIR)/*.o $(LIBCHIPDNACLIENT_OBJ)
 
 clean :

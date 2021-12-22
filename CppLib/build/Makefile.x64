@@ -3,6 +3,7 @@ CPP_ROOTPATH = /usr/lib/gcc/x86_64-linux-gnu
 CPP_VERSION = 5.4.0
 CPP_COMPILE = g++ -m64
 CPP_LIB_NAME = libstdc++
+CPP_LIB_PATH = $(CPP_ROOTPATH)/$(CPP_VERSION)/$(CPP_LIB_NAME).a
 CFLAGS = 
 LFLAGS = -L/usr/lib
 OBJ_DIR = obj-x64
@@ -45,7 +46,7 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 	
 libchipdnaclient : $(OBJDIR) $(LIBCHIPDNACLIENT_OBJ)
-	cd $(OBJ_DIR) && $(AR) x $(CPP_ROOTPATH)/$(CPP_VERSION)/$(CPP_LIB_NAME).a
+	cd $(OBJ_DIR) && $(AR) x $(CPP_LIB_PATH)
 	$(AR) rcs $(LIBCHIPDNACLIENT_LIBNAME) $(OBJ_DIR)/*.o $(LIBCHIPDNACLIENT_OBJ)
 
 clean :
