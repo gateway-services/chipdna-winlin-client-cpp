@@ -4,6 +4,7 @@
 #include <list>
 #include <map>
 #include <string>
+#define HAVE_STRUCT_TIMESPEC
 #include <pthread.h>
 #include <functional>
 #include "parameterset.h"

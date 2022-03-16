@@ -18,6 +18,7 @@
 #include "clienthelper.h"
 
 #ifdef WIN32
+#include <Windows.h>
 #include <direct.h>
 #define GetCurrentDir _getcwd
 #else
@@ -175,6 +176,10 @@ std::string getPrintableCardHash(std::vector<CardHash> & cardHashes){
 
 	Client::Client(const std::string identifier, const std::string ipAddress, const int port, bool enableSSL, bool saveReceipt, Configparser& settings) : settings_(settings)
 {
+#ifdef WIN32
+	SetConsoleOutputCP(CP_UTF8);
+	SetConsoleCP(CP_UTF8);
+#endif
 	errorOccured = false;
 	m_clientHelper = NULL;
 	this->saveReceipt = saveReceipt;
@@ -219,8 +224,7 @@ std::string getPrintableCardHash(std::vector<CardHash> & cardHashes){
 }
 
 void Client::run(){
-	std::string command = "";
-	
+	std::string command = "";	
 	while (true){
 		printConsoleCommands();
 		command = "";
@@ -470,21 +474,31 @@ void Client::performStartTransaction()
 	if (!panKeyEntry.empty() && strToUpper(panKeyEntry).compare("FALSE") != 0){
 			startTransParams.Add(ParameterKeys::PanKeyEntry, panKeyEntry);
 
-		std::string address = getUserInput("Please enter address information (Optional)");
-		if (!address.empty()){
+		if (!type.empty() && strToUpper(type).compare("REFUND") != 0)
+		{
+			std::string address = getUserInput("Please enter address information (Optional)");
+			if (!address.empty()) {
 				startTransParams.Add(ParameterKeys::CardholderAddress, address);
+			}
+
+			std::string zipcode = getUserInput("Please enter Postcode/Zipcode (Optional)");
+			if (!zipcode.empty()) {
+				startTransParams.Add(ParameterKeys::CardholderZipcode, zipcode);
+			}
 		}
 
-		std::string zipcode = getUserInput("Please enter Postcode/Zipcode (Optional)");
-		if (!zipcode.empty()){
-				startTransParams.Add(ParameterKeys::CardholderZipcode, zipcode);
-		}
 	}
 	
-	std::string tipping = getTippingMethod(false, "DEFAULT");
-	if (!tipping.empty())
-			startTransParams.Add(ParameterKeys::TippingSupport, tipping);
 
+	if (strToUpper(type).compare("SALE") == 0)
+	{
+		std::string tipping = getTippingMethod(false, "DEFAULT");
+		if (!tipping.empty())
+		{
+			startTransParams.Add(ParameterKeys::TippingSupport, tipping);
+		}
+	}
+		
 	ParameterSet response;
 		startTransParams += getExtraParams("StartTransaction");
 		if (m_clientHelper->StartTransaction(startTransParams, response)) {
