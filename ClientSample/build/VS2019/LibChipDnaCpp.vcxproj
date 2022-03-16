@@ -174,18 +174,16 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="packages\ChipDNA.CI.Pthreads-Win32.redist.2.91\build\native\ChipDNA.CI.Pthreads-Win32.redist.targets" Condition="Exists('packages\ChipDNA.CI.Pthreads-Win32.redist.2.91\build\native\ChipDNA.CI.Pthreads-Win32.redist.targets')" />
-    <Import Project="packages\ChipDNA.CI.Pthreads-Win32.2.91\build\native\ChipDNA.CI.Pthreads-Win32.targets" Condition="Exists('packages\ChipDNA.CI.Pthreads-Win32.2.91\build\native\ChipDNA.CI.Pthreads-Win32.targets')" />
-    <Import Project="packages\ChipDNA.CI.OpenSSL-Win32.redist.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.redist.targets" Condition="Exists('packages\ChipDNA.CI.OpenSSL-Win32.redist.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.redist.targets')" />
-    <Import Project="packages\ChipDNA.CI.OpenSSL-Win32.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.targets" Condition="Exists('packages\ChipDNA.CI.OpenSSL-Win32.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.targets')" />
+    <Import Project="packages\openssl-vc141.1.1.0\build\native\openssl-vc141.targets" Condition="Exists('packages\openssl-vc141.1.1.0\build\native\openssl-vc141.targets')" />
+    <Import Project="packages\pthreads.redist.2.9.1.4\build\native\pthreads.redist.targets" Condition="Exists('packages\pthreads.redist.2.9.1.4\build\native\pthreads.redist.targets')" />
+    <Import Project="packages\pthreads.2.9.1.4\build\native\pthreads.targets" Condition="Exists('packages\pthreads.2.9.1.4\build\native\pthreads.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\ChipDNA.CI.Pthreads-Win32.redist.2.91\build\native\ChipDNA.CI.Pthreads-Win32.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ChipDNA.CI.Pthreads-Win32.redist.2.91\build\native\ChipDNA.CI.Pthreads-Win32.redist.targets'))" />
-    <Error Condition="!Exists('packages\ChipDNA.CI.Pthreads-Win32.2.91\build\native\ChipDNA.CI.Pthreads-Win32.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ChipDNA.CI.Pthreads-Win32.2.91\build\native\ChipDNA.CI.Pthreads-Win32.targets'))" />
-    <Error Condition="!Exists('packages\ChipDNA.CI.OpenSSL-Win32.redist.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ChipDNA.CI.OpenSSL-Win32.redist.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.redist.targets'))" />
-    <Error Condition="!Exists('packages\ChipDNA.CI.OpenSSL-Win32.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ChipDNA.CI.OpenSSL-Win32.1.1.0\build\native\ChipDNA.CI.OpenSSL-Win32.targets'))" />
+    <Error Condition="!Exists('packages\openssl-vc141.1.1.0\build\native\openssl-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\openssl-vc141.1.1.0\build\native\openssl-vc141.targets'))" />
+    <Error Condition="!Exists('packages\pthreads.redist.2.9.1.4\build\native\pthreads.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\pthreads.redist.2.9.1.4\build\native\pthreads.redist.targets'))" />
+    <Error Condition="!Exists('packages\pthreads.2.9.1.4\build\native\pthreads.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\pthreads.2.9.1.4\build\native\pthreads.targets'))" />
   </Target>
 </Project>
