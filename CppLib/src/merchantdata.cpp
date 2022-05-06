@@ -101,7 +101,7 @@ namespace ChipDnaClientLib {
 		int index = 1;
 		for (auto & merchant : merchantVector) {
 
-			ss << "---------- " << "Merchant Data Account" << index++ << "  ------------\r\n\r\n";
+			ss << "---------- " << "Merchant Data Account" << index++ << "  ------------\n\n";
 			ss << merchant.ToString();
 		}
 		return ss.str();

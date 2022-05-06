@@ -25,6 +25,8 @@ LIBCHIPDNACLIENT_SRC_ = \
 	parameterset.cpp \
 	pugixml.cpp \
 	receiptdata.cpp \
+	requestqueueruncompletedobject.cpp \
+	requestqueuereport.cpp \
 	response.cpp \
 	responsecontainer.cpp \
 	tcpipclient.cpp \

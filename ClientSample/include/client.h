@@ -6,6 +6,7 @@
 #include "receiptdata.h"
 #include "receiptitemtype.h"
 #include "ExtraParameter.h"
+#include "requestqueuetypes.h"
 
 namespace ChipDNA {
 	
@@ -39,7 +40,9 @@ namespace ChipDNA {
 		bool getCardDetailsInProgress;
 		bool saveReceipt;
 		bool verboseLogEnabled;
+		bool requestQueueRunCompletedEventSubscribed = false;
 		ClientHelper*  m_clientHelper;
+		Configparser& settings_;
 		void performTransaction();
 		void computeInput(char commandKey);
 		void printConsoleCommands();
@@ -69,6 +72,8 @@ namespace ChipDNA {
 		void performSendPassThruCommand();
 		void performConnectAndConfigure();
 		void performCustomCommand();
+		void toggleRequestQueueRunCompletedEvent();
+		void runRequestQueue();
 		void cardDetailsEvent(KeyValue & list);
 		void signatureVerificationRequestedEvent(KeyValue & list);
 		void cardNotificationEvent(KeyValue & list);
@@ -84,11 +89,10 @@ namespace ChipDNA {
 		void sendPassThruCommandResponseEvent(KeyValue & list);
 		void connectAndConfigureEvent(KeyValue & parameters);
 		void configurationUpdateEvent(KeyValue & parameters);
-		void dccRateInformationEvent(KeyValue & list);	void errorEvent(std::string & details);
+		void dccRateInformationEvent(KeyValue & list);
+		void requestQueueRunCompletedEvent(KeyValue & parameters);
+		void errorEvent(std::string & details);
 		std::string strToUpper(std::string upperme);
-
-	private:
-		Configparser& settings_;
 	};
 }
 #endif

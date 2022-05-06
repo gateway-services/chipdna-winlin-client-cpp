@@ -271,7 +271,7 @@ namespace ChipDnaClientLib {
 		};
 
 		std::stringstream ss;
-		ss << "----------\r\n  ChipDNA status:\r\n";
+		ss << "----------\n  ChipDNA status:\n";
 
 		int statusObjectsSize = sizeof statusObjects / sizeof*statusObjects;
 
@@ -286,7 +286,7 @@ namespace ChipDnaClientLib {
 			ss << virtualTerminalStatusString.str();
 		}
 
-		ss << "\r\n----------\r\n";
+		ss << "\n----------\n";
 		return ss.str();
 	}
 

@@ -53,6 +53,15 @@
     <ClInclude Include="..\..\..\CppLib\include\receiptdata.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+	<ClInclude Include="..\..\..\CppLib\include\requestqueuetypes.h">
+	  <Filter>Header Files</Filter>
+	</ClInclude>
+	<ClInclude Include="..\..\..\CppLib\include\requestqueueruncompletedobject.h">
+	  <Filter>Header Files</Filter>
+	</ClInclude>
+	<ClInclude Include="..\..\..\CppLib\include\requestqueuereport.h">
+	  <Filter>Header Files</Filter>
+	</ClInclude>
     <ClInclude Include="..\..\..\CppLib\include\response.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -187,6 +196,15 @@
     <ClCompile Include="..\..\..\CppLib\src\receiptdata.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\merchant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\requestqueueruncompletedobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CppLib\src\requestqueuereport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\CppLib\src\response.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -200,9 +218,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\CppLib\src\merchantdata.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\CppLib\src\merchant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

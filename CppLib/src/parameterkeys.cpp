@@ -98,6 +98,12 @@ namespace ChipDnaClientLib {
 
 	const std::string ParameterKeys::SignatureVerificationRequired = "SIGNATURE_VERIFICATION_REQUIRED";
 
+	const std::string ParameterKeys::RequestQueueType = "REQUEST_QUEUE_TYPE";
+	
+	const std::string ParameterKeys::RunFailedTransactionsFromDate = "RUN_QUEUE_FAILED_TRANSACTIONS_FROM_DATE";
+	
+	const std::string ParameterKeys::RequestQueueReport = "REQUEST_QUEUE_REPORT";
+
 	const std::string ParameterKeys::TerminateDisplayMessage = "TERMINATE_DISPLAY_MESSAGE";
 
 	const std::string ParameterKeys::TerminalIdMasked = "TERMINAL_ID_MASKED";
