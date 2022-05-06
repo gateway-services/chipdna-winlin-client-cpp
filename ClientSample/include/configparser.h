@@ -25,6 +25,9 @@ namespace ChipDNA {
 		std::string apiKey();
 		std::string sslhost();
 		std::string savereceipt();
+		std::string merchantStreetAddress();
+		std::string merchantCityStateZip();
+		std::string merchantPhoneNumber();
 		const std::vector<ExtraParameter> getExtraParameters(const std::string& command);
 
 	private:

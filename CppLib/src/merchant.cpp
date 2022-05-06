@@ -49,23 +49,23 @@ namespace ChipDnaClientLib {
 
 	std::string Merchant::ToString() {
 		std::stringstream ss;
-		ss << "Merchant name: " << GetName() << "\r\n";
-		ss << "Merchant category code: " << GetCategoryCode() << "\r\n";
-		ss << "Merchant number: " << GetNumber() << "\r\n";
+		ss << "Merchant name: " << GetName() << "\n";
+		ss << "Merchant category code: " << GetCategoryCode() << "\n";
+		ss << "Merchant number: " << GetNumber() << "\n";
 
-		ss << "\r\n---------- " << "Card schemes enabled for this merchant" << "\r\n\r\n";
+		ss << "\n---------- " << "Card schemes enabled for this merchant" << "\n\n";
 		for (auto const &value : GetCardSchemes()) {
-			ss << "Card scheme id: " << value << ", label: " << GetCardSchemeName(value) << "\r\n";
+			ss << "Card scheme id: " << value << ", label: " << GetCardSchemeName(value) << "\n";
 		}
-		ss << "\r\n---------- " << "Currencies enabled for this merchant" << "\r\n\r\n";
+		ss << "\n---------- " << "Currencies enabled for this merchant" << "\n\n";
 
 		for (auto &value : GetCurrencies()) {
-			ss << value.ToString() << "\r\n";
+			ss << value.ToString() << "\n";
 		}
 
-		ss << "\r\n---------- " << "Transaction types enabled for this merchant" << "\r\n\r\n";
+		ss << "\n---------- " << "Transaction types enabled for this merchant" << "\n\n";
 		for (auto &value : GetTransactionTypes()) {
-			ss << "Transaction type id: " << value << ", label: " << GetTransactionTypeIdName(value) << "\r\n";
+			ss << "Transaction type id: " << value << ", label: " << GetTransactionTypeIdName(value) << "\n";
 		}
 		return ss.str();
 	}

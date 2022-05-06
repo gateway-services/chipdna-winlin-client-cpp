@@ -410,6 +410,38 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
+		* 	Parameter key for the {@link ParameterTokens.RequestQueueTypes}. Values can be Pending, Failed or PendingAndFailed.
+		* 
+		* KEY = REQUEST_QUEUE_TYPE
+		*/
+		static const std::string RequestQueueType;
+
+		/**
+		* \brief
+		* 	Parameter key for the status of the request queue. Values can be true or false.
+		* 
+		* KEY = REQUEST_QUEUE_ALREADY_RUNNING
+		*/
+		static const std::string RequestQueueAlreadyRunning;
+
+		/**
+		* \brief
+		* 	Parameter key for the date from when the transactions from the request queue should be processed.
+		* 
+		* KEY = RUN_QUEUE_FAILED_TRANSACTIONS_FROM_DATE
+		*/
+		static const std::string RunFailedTransactionsFromDate;
+
+		/**
+		* \brief
+		* 	Parameter key for the XML report with the data collected while running the request queue.
+		* 
+		* KEY = REQUEST_QUEUE_REPORT.
+		*/
+		static const std::string RequestQueueReport;
+
+		/**
+		* \brief
 		* 	Parameter key for signature captured flag. Value can be true or false.
 		*
 		* Key = SIGNATURE_CAPTURED;
