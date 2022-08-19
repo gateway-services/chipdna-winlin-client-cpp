@@ -497,10 +497,21 @@ void Client::performStartTransaction()
 		}
 
 	}
-	
 
 	if (strToUpper(type).compare("SALE") == 0)
 	{
+		bool firstStore = getFirstStore();
+
+		if (firstStore)
+		{
+			startTransParams.Add(ParameterKeys::CredentialOnFileFirstStore, "True");
+			std::string firstStoreReason = getFirstStoreReason();
+			if (!firstStoreReason.empty())
+			{
+				startTransParams.Add(ParameterKeys::CredentialOnFileReason, firstStoreReason);
+			}
+		}
+
 		std::string tipping = getTippingMethod(false, "DEFAULT");
 		if (!tipping.empty())
 		{
@@ -801,6 +812,7 @@ void Client::printReceipt(ReceiptData * receipt){
 			 * MerchantStreetAddress, MerchantCityStateZip and MerchantPhoneNumber
 			 * are not populated by ChipDNA and must be populated by the integration,
 			 * when they are present in ReceiptData.
+			 * The same also applies to MerchandiseDescription.
 			 */
 			if (!items[i].Label.empty())
 				stringStream << items[i].Label << " : ";
@@ -819,6 +831,11 @@ void Client::printReceipt(ReceiptData * receipt){
 				//e.g. (555) 555-1234
 				stringStream << settings_.merchantPhoneNumber() << "\n";
 			}
+			else if (items[i].ReceiptEntryId == "MerchandiseDescription")
+			{
+				//e.g. Food and drinks
+				stringStream << settings_.merchandiseDescription() << "\n";
+			}			
 			else
 			{
 				stringStream << items[i].Value << "\n";
@@ -881,6 +898,26 @@ std::string Client::getAmount(const bool isRequired){
 	stringStream << msg;
 	amount = getUserInput(stringStream.str());
 	return amount;
+}
+
+std::string Client::getFirstStoreReason() {
+	std::string reason = "";
+	std::stringstream stringStream;
+	stringStream << "Credential On File Transaction Reason? (Optional)";
+	reason = getUserInput(stringStream.str());
+	return reason;
+}
+
+bool Client::getFirstStore() {
+	std::string isFirstStore;
+	std::stringstream stringStream;
+	stringStream << "Credential On File First Store Transaction? [True,False] (Optional)";
+	
+	isFirstStore = getUserInput(stringStream.str());
+	std::transform(isFirstStore.begin(), isFirstStore.end(), isFirstStore.begin(), ::toupper);
+
+	if (isFirstStore.empty()) return false;
+	return isFirstStore == "TRUE";
 }
 
 ParameterSet Client::getRequestedParameterSet(ParameterSet parameter) {
@@ -1347,6 +1384,7 @@ void Client::errorEvent(std::string & details)
 {
 	std::cout << "Error: Connection has been closed, Details: " << details << std::endl;
 }
+
 
 bool Client::isNumber(const std::string& num) {
 	std::string::const_iterator iterator = num.begin();

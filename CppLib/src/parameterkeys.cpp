@@ -258,6 +258,10 @@ namespace ChipDnaClientLib {
 
 	const std::string ParameterKeys::CardHolderLastName = "CARD_HOLDER_LAST_NAME";
 
+	const std::string ParameterKeys::CredentialOnFileFirstStore = "CREDENTIAL_ON_FILE_FIRST_STORE";
+
+	const std::string ParameterKeys::CredentialOnFileReason = "CREDENTIAL_ON_FILE_REASON";
+
 	const std::string ParameterKeys::MerchantDefinedField01 = "MERCHANT_DEFINED_FIELD_01";
 
 	const std::string ParameterKeys::MerchantDefinedField02 = "MERCHANT_DEFINED_FIELD_02";

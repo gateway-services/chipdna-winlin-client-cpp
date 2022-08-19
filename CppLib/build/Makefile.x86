@@ -42,7 +42,7 @@ G++ = $(CPP_COMPILE) -D_GLIBC_2_0_SOURCE $(LDFLAGS)
 all: libchipdnaclient
 
 $(OBJ_DIR)/%.o: $(LIBCHIPDNACLIENT_SRC_PATH)/%.cpp | $(OBJ_DIR)
-	$(G++) -c -I$(LIBCHIPDNACLIENT_INC_PATH) -I$(LIBOPENSSL_INC) -o $@ $< $(CFLAGS)
+	$(G++) -c -o $@ $< $(CFLAGS) -I$(LIBCHIPDNACLIENT_INC_PATH) -I$(LIBOPENSSL_INC)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
