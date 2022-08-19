@@ -72,6 +72,10 @@ namespace ChipDnaClientLib {
 					deviceItem.ConfigurationState = paymentDeviceNode.child(DEVICE_STATE.c_str()).text().get();
 					deviceItem.IsProcessingTransaction = paymentDeviceNode.child(PROCESSING_TRANSACTION.c_str()).text().get();
 					deviceItem.AvailabilityError = paymentDeviceNode.child(AVAILABILITY_ERROR.c_str()).text().get();
+					deviceItem.BatteryPercentage = paymentDeviceNode.child(BATTERY_PERCENTAGE.c_str()).text().get();
+					deviceItem.BatteryChargingStatus = paymentDeviceNode.child(BATTERY_CHARGING_STATUS.c_str()).text().get();
+					deviceItem.BatteryStatusUpdateDateTime = paymentDeviceNode.child(BATTERY_STATUS_UPDATE_DATETIME.c_str()).text().get();
+					deviceItem.BatteryStatusUpdateDateTimeFormat = paymentDeviceNode.child(BATTERY_STATUS_UPDATE_DATETIME_FORMAT.c_str()).text().get();
 
 					auto outerErrorListNode = paymentDeviceNode.child(AVAILABILITY_ERROR_TAG.c_str());
 					auto paramNode = outerErrorListNode.child("PaymentDeviceAvailabilityErrorInformation");
@@ -528,6 +532,10 @@ namespace ChipDnaClientLib {
 		configuredDeviceModel = device.DeviceModel;
 		available = StringToBool(device.IsAvailable);
 		availableAsString = device.IsAvailable;
+		batteryPercentage = device.BatteryPercentage;
+		batteryChargingStatus = device.BatteryChargingStatus;
+		batteryStatusUpdateDateTime = device.BatteryStatusUpdateDateTime;
+		batteryStatusUpdateDateTimeFormat = device.BatteryStatusUpdateDateTimeFormat;
 	}
 
 	ChipDnaStatus::PaymentDeviceStatus::PaymentDeviceStatus() {
@@ -538,6 +546,10 @@ namespace ChipDnaClientLib {
 		configuredDeviceModel = "";
 		available = false;
 		availableAsString = "";
+		batteryPercentage = "";
+		batteryChargingStatus = "";
+		batteryStatusUpdateDateTime = "";
+		batteryStatusUpdateDateTimeFormat = "";
 	}
 
 	std::string ChipDnaStatus::PaymentDeviceStatus::GetConfiguredDeviceId() {
@@ -568,6 +580,22 @@ namespace ChipDnaClientLib {
 		return configuredDeviceModel;
 	}
 
+	std::string ChipDnaStatus::PaymentDeviceStatus::GetBatteryPercentage() {
+		return batteryPercentage;
+	}
+
+	std::string ChipDnaStatus::PaymentDeviceStatus::GetBatteryChargingStatus() {
+		return batteryChargingStatus;
+	}
+
+	std::string ChipDnaStatus::PaymentDeviceStatus::GetBatteryStatusUpdateDateTime() {
+		return batteryStatusUpdateDateTime;
+	}
+
+	std::string ChipDnaStatus::PaymentDeviceStatus::GetBatteryStatusUpdateDateTimeFormat() {
+		return batteryStatusUpdateDateTimeFormat;
+	}
+
 	std::string ChipDnaStatus::PaymentDeviceStatus::ToString() {
 		std::stringstream ss;
 		ss << ParameterKeys::PaymentDeviceStatus + ": ConfiguredDeviceModel: " << configuredDeviceModel;
@@ -584,6 +612,14 @@ namespace ChipDnaClientLib {
 		if (configuredDeviceModel.empty()) {
 			return "";
 		}
+
+		if (!batteryPercentage.empty()) {
+			ss << ", BatteryPercentage: " << batteryPercentage;
+			ss << ", BatteryChargingStatus: " << batteryChargingStatus;
+			ss << ", BatteryStatusUpdateDateTime: " << batteryStatusUpdateDateTime;
+			ss << ", BatteryStatusUpdateDateTimeFormat: " << batteryStatusUpdateDateTimeFormat;
+		}
+
 		return ss.str();
 	}
 

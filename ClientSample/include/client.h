@@ -25,12 +25,14 @@ namespace ChipDNA {
 
 		std::string getReference(const bool isRequired, const std::string def);
 		std::string getAmount(const bool isRequired);
+		bool getFirstStore();
 		ParameterSet getRequestedParameterSet(ParameterSet parameter);
 		std::string getGratuity(const bool isRequired);
 		std::string getAmountType(const bool isRequired);
 		std::string getType(const bool isRequired, const std::string def);
 		std::string getTippingMethod(const bool isRequired, const std::string def);
 		std::string getBatchReference();
+		std::string getFirstStoreReason();
 		bool errorOccured;
 		bool voiceReferralRequired;
 		bool voiceReferralDone;

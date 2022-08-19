@@ -17,7 +17,8 @@ CHIPDNACLIENTSAMPLE_OBJ = $(CHIPDNACLIENTSAMPLE_SRC:.cpp=.o)
 
 DEPENDENCIES = -lrt -lssl -lcrypto
 CFLAGS = 
-G++ = arm-linux-gnueabi-g++
+LDFLAGS = 
+G++ = arm-linux-gnueabi-g++ $(LDFLAGS)
 EXE_DIR = arm
 
 all: $(CHIPDNACLIENTSAMPLE_OBJ)

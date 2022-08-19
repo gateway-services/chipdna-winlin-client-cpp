@@ -17,7 +17,8 @@ CHIPDNACLIENTSAMPLE_OBJ = $(CHIPDNACLIENTSAMPLE_SRC:.cpp=.o)
 
 DEPENDENCIES = -lrt -lssl -lcrypto
 CFLAGS = 
-G++ = arm-linux-gnueabihf-g++ -std=c++11
+LDFLAGS = 
+G++ = arm-linux-gnueabihf-g++ $(LDFLAGS) -std=c++11
 
 all: $(CHIPDNACLIENTSAMPLE_OBJ)
 	$(G++) -L$(LIBCHIPDNACLIENT_PATH_LIB) $^ -o $(CHIPDNACLIENTSAMPLE_NAME)-armhf -pthread -l$(LIBCHIPDNACLIENT_LIBNAME)-armhf $(DEPENDENCIES) $(CFLAGS)

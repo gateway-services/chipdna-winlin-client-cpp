@@ -471,9 +471,9 @@
 
 			/**
 			* \brief
-			* 	The transaction cannot continue because the presented card is a whitelisted non-payment card.
+			* 	The transaction cannot continue because the presented card is a allowlisted non-payment card.
 			**/
-			WhitelistedCardPresented,
+			AllowlistedCardPresented,
 
 			/**
 			* \brief
@@ -561,7 +561,7 @@
 				map["PassThruNotSupported"] = PassThruNotSupported;
 				map["PaymentDeviceCommandNotAllowed"] = PaymentDeviceCommandNotAllowed;
 				map["PassThruConfigMissing"] = PassThruConfigMissing;
-				map["WhitelistedCardPresented"] = WhitelistedCardPresented;
+				map["AllowlistedCardPresented"] = AllowlistedCardPresented;
 				map["OnlinePinKeyMissing"] = OnlinePinKeyMissing;
 
 				return map;

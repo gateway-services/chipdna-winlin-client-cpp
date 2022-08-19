@@ -191,6 +191,22 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
+		*	Parameter key to indicate the transaction is the first store for a Credential on File transaction.
+		*
+		* Key = CREDENTIAL_ON_FILE_FIRST_STORE
+		*/
+		static const std::string CredentialOnFileFirstStore;
+
+		/**
+		* \brief
+		*	Parameter key for Credential on File transactions to indicate the reason for the transaction. Value may be one of {@link FIX ME}
+		*
+		* Key = CREDENTIAL_ON_FILE_REASON
+		*/
+		static const std::string CredentialOnFileReason;
+
+		/**
+		* \brief
 		*	Parameter key for the card account type.
 		*
 		* Key = ACCOUNT_TYPE

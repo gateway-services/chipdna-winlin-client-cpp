@@ -5,7 +5,7 @@ CPP_VERSION = 5.4.0
 CPP_COMPILE = arm-linux-gnueabi-g++
 CPP_LIB_NAME = libstdc++
 CFLAGS =
-LFLAGS = -L/usr/arm-linux-gnueabi/lib
+LDFLAGS = -L/usr/arm-linux-gnueabi/lib
 OBJ_DIR = obj-arm
 
 LIBCHIPDNACLIENT_SRC_PATH = ../src
@@ -37,12 +37,12 @@ LIBCHIPDNACLIENT_OBJ = $(LIBCHIPDNACLIENT_SRC:.cpp=.o)
 
 DEPENDENCIES = -lrt 
 
-G++ = $(CPP_COMPILE) -D_GLIBC_2_0_SOURCE $(LFLAGS)
+G++ = $(CPP_COMPILE) -D_GLIBC_2_0_SOURCE $(LDFLAGS)
 
 all: libchipdnaclient
 
 $(OBJ_DIR)/%.o: $(LIBCHIPDNACLIENT_SRC_PATH)/%.cpp | $(OBJ_DIR)
-	$(G++) -c -I$(LIBCHIPDNACLIENT_INC_PATH) -I$(LIBOPENSSL_INC) -o $@ $< $(CFLAGS)
+	$(G++) -c -o $@ $< $(CFLAGS) -I$(LIBCHIPDNACLIENT_INC_PATH) -I$(LIBOPENSSL_INC)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
