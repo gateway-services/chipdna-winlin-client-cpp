@@ -94,7 +94,7 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
-		* 	Parameter key for the transactions processing status of the ChipDNA server in XML format representing {@link ServerStatus}.
+		* 	Parameter key for the transactions processing status of the ChipDNA server in XML format representing {@link ChipDnaStatus.ServerStatus}.
 		*
 		* KEY = CHIPDNA_STATUS
 		*/
@@ -199,7 +199,7 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
-		*	Parameter key for Credential on File transactions to indicate the reason for the transaction. Value may be one of {@link FIX ME}
+		*	Parameter key for Credential on File transactions to indicate the reason for the transaction. Value may be one of {@link ParameterTokens.CredentialOnFileReason} 
 		*
 		* Key = CREDENTIAL_ON_FILE_REASON
 		*/
@@ -303,7 +303,7 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
-		* 	Parameter key for notification of which card event has occurred. Value can be one of {@link CardNotification}.
+		* 	Parameter key for notification of which card event has occurred. Value can be one of {@link ParameterTokens.CardNotification}.
 		*
 		* KEY = NOTIFICATION
 		*/
@@ -351,7 +351,7 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
-		* 	Parameter key for payment platform status. The status of the Creditcall payment gateway in XML format representing{@link ChipDnaStatus.PaymentPlatformStatus}.
+		* 	Parameter key for payment platform status. The status of the Creditcall payment gateway in XML format representing {@link ChipDnaStatus.PaymentPlatformStatus}.
 		*
 		* KEY = PAYMENT_PLATFORM_STATUS
 		*/
@@ -523,7 +523,7 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
-		* 	Parameter key for transaction state. Valid values can be one of {@link State}.
+		* 	Parameter key for transaction state. Valid values can be one of {@link ParameterTokens.State}.
 		*
 		* KEY = TRANSACTION_STATE
 		*/
@@ -565,6 +565,7 @@ namespace ChipDnaClientLib {
 		/**
 		* \brief
 		* 	Parameter key for the total amount for the transaction in minor units.
+		*
 		* KEY = TOTAL_AMOUNT
 		*/
 		static const std::string TotalAmount;
@@ -572,6 +573,7 @@ namespace ChipDnaClientLib {
 		/**
 		* \brief
 		* 	Parameter key for the local total amount for the transaction in minor units.
+		*
 		* KEY = LOCAL_TOTAL_AMOUNT
 		*/
 		static const std::string LocalTotalAmount;
@@ -579,6 +581,7 @@ namespace ChipDnaClientLib {
 		/**
 		* \brief
 		* 	Parameter key for the transaction currency for the transaction in minor units.
+		*
 		* KEY = TRANSACTION_CURRENCY
 		*/
 		static const std::string TransactionCurrency;
@@ -586,6 +589,7 @@ namespace ChipDnaClientLib {
 		/**
 		* \brief
 		* 	Parameter key for the local transaction currency for the transaction in minor units.
+		*
 		* KEY = LOCAL_TRANSACTION_CURRENCY
 		*/
 		static const std::string LocalTransactionCurrency;
@@ -640,7 +644,7 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
-		* 	Parameter key for the reason for void. Valid values can be one of {@link VoidReason}.
+		* 	Parameter key for the reason for void. Valid values can be one of {@link ParameterTokens.VoidReason}.
 		*
 		* KEY = VOID_REASON
 		*/
@@ -691,7 +695,7 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
-		* 	Parameter key for the payment device availability error. Value may be one of {@link PaymentDeviceAvailabilityError}.
+		* 	Parameter key for the payment device availability error. Value may be one of {@link ParameterTokens.PaymentDeviceAvailabilityError}.
 		*
 		* KEY = AVAILABILITY_ERROR
 		*/
@@ -724,7 +728,7 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
-		* 	Parameter key for the TMS configuration update schedule. Value may be one of  {@link TmsUpdateSchedule}.
+		* 	Parameter key for the TMS configuration update schedule. Value may be one of  {@link ParameterTokens.TmsUpdateSchedule}.
 		*
 		* KEY = CONFIGURATION_UPDATE_SCHEDULE
 		*/
