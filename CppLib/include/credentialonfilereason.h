@@ -5,6 +5,7 @@
 
 namespace ChipDnaClientLib {
 
+	/// Parameter tokens
 	namespace ParameterTokens {
 
 		/**
