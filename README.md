@@ -5,7 +5,7 @@ This client library gives developers a secure TCP/IP interface to ChipDNA server
 ## Setup
 ### Visual Studio
 The Visual Studio 2019 solution will build the client library and the sample client. Both projects will require the following libraries:
-* OpenSSL v1.0.1j
+* OpenSSL v3.x.x (the project currently uses v3.0.3 but any should work)
 * pthreads v2.9.1
 The full archives should be extracted to the directory specified in the `ChipDnaClientSample` and `LibChipDnaCpp` projects (by default `ChipDnaClient\SampleClient\deps`)
 
