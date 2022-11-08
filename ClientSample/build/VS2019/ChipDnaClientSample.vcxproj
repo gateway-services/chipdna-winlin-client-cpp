@@ -76,7 +76,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\include;..\..\deps\clientlib;deps\openssl-3.0.3\x86\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\deps\clientlib;deps\openssl-3.0.7\x86\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -94,11 +94,11 @@ copy ..\..\build\VS2019\packages\pthreads.2.9.1.4\build\native\lib\v110\Win32\Re
 copy ..\..\build\VS2019\packages\pthreads.redist.2.9.1.4\build\native\bin\v110\Win32\Release\dynamic\cdecl $(Configuration)
 copy ..\..\build\VS2019\packages\pthreads.2.9.1.4\build\native\lib\v110\Win32\Release\dynamic\cdecl $(Configuration)
 
-copy ..\..\build\VS2019\deps\openssl-3.0.3\x86\lib\libssl.lib $(Configuration)\LibChipDnaCpp
-copy ..\..\build\VS2019\deps\openssl-3.0.3\x86\lib\libcrypto.lib $(Configuration)\LibChipDnaCpp
+copy ..\..\build\VS2019\deps\openssl-3.0.7\x86\lib\libssl.lib $(Configuration)\LibChipDnaCpp
+copy ..\..\build\VS2019\deps\openssl-3.0.7\x86\lib\libcrypto.lib $(Configuration)\LibChipDnaCpp
 
-copy ..\..\build\VS2019\deps\openssl-3.0.3\x86\bin\libssl-3.dll $(Configuration)
-copy ..\..\build\VS2019\deps\openssl-3.0.3\x86\bin\libcrypto-3.dll $(Configuration)
+copy ..\..\build\VS2019\deps\openssl-3.0.7\x86\bin\libssl-3.dll $(Configuration)
+copy ..\..\build\VS2019\deps\openssl-3.0.7\x86\bin\libcrypto-3.dll $(Configuration)
 
 copy ..\..\resources\client.config.xml .</Command>
     </PreBuildEvent>
@@ -112,7 +112,7 @@ copy ..\..\resources\client.config.xml .</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\include;..\..\deps\clientlib;deps\openssl-3.0.3\x86\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\deps\clientlib;deps\openssl-3.0.7\x86\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -137,11 +137,11 @@ copy ..\..\build\VS2019\packages\pthreads.2.9.1.4\build\native\lib\v110\Win32\Re
 copy ..\..\build\VS2019\packages\pthreads.redist.2.9.1.4\build\native\bin\v110\Win32\Release\dynamic\cdecl $(Configuration)
 copy ..\..\build\VS2019\packages\pthreads.2.9.1.4\build\native\lib\v110\Win32\Release\dynamic\cdecl $(Configuration)
 
-copy ..\..\build\VS2019\deps\openssl-3.0.3\x86\lib\libssl.lib $(Configuration)\LibChipDnaCpp
-copy ..\..\build\VS2019\deps\openssl-3.0.3\x86\lib\libcrypto.lib $(Configuration)\LibChipDnaCpp
+copy ..\..\build\VS2019\deps\openssl-3.0.7\x86\lib\libssl.lib $(Configuration)\LibChipDnaCpp
+copy ..\..\build\VS2019\deps\openssl-3.0.7\x86\lib\libcrypto.lib $(Configuration)\LibChipDnaCpp
 
-copy ..\..\build\VS2019\deps\openssl-3.0.3\x86\bin\libssl-3.dll $(Configuration)
-copy ..\..\build\VS2019\deps\openssl-3.0.3\x86\bin\libcrypto-3.dll $(Configuration)
+copy ..\..\build\VS2019\deps\openssl-3.0.7\x86\bin\libssl-3.dll $(Configuration)
+copy ..\..\build\VS2019\deps\openssl-3.0.7\x86\bin\libcrypto-3.dll $(Configuration)
 
 copy ..\..\resources\client.config.xml .</Command>
     </PreBuildEvent>
