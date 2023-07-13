@@ -1,5 +1,5 @@
 CPP_VERSION = 5.4.0
-CFLAGS=-std=c++11
+CFLAGS = -std=c++11
 
 all: 
 	@echo "Use make (libchipdnaclient-arm | libchipdnaclient-armhf | libchipdnaclient-x64 | libchipdnaclient-x86 | clean)"

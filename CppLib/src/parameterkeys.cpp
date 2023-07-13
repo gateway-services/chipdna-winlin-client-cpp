@@ -98,6 +98,12 @@ namespace ChipDnaClientLib {
 
 	const std::string ParameterKeys::SignatureVerificationRequired = "SIGNATURE_VERIFICATION_REQUIRED";
 
+	const std::string ParameterKeys::RequestQueueType = "REQUEST_QUEUE_TYPE";
+	
+	const std::string ParameterKeys::RunFailedTransactionsFromDate = "RUN_QUEUE_FAILED_TRANSACTIONS_FROM_DATE";
+	
+	const std::string ParameterKeys::RequestQueueReport = "REQUEST_QUEUE_REPORT";
+
 	const std::string ParameterKeys::TerminateDisplayMessage = "TERMINATE_DISPLAY_MESSAGE";
 
 	const std::string ParameterKeys::TerminalIdMasked = "TERMINAL_ID_MASKED";
@@ -251,6 +257,10 @@ namespace ChipDnaClientLib {
 	const std::string ParameterKeys::CardHolderFirstName = "CARD_HOLDER_FIRST_NAME";
 
 	const std::string ParameterKeys::CardHolderLastName = "CARD_HOLDER_LAST_NAME";
+
+	const std::string ParameterKeys::CredentialOnFileFirstStore = "CREDENTIAL_ON_FILE_FIRST_STORE";
+
+	const std::string ParameterKeys::CredentialOnFileReason = "CREDENTIAL_ON_FILE_REASON";
 
 	const std::string ParameterKeys::MerchantDefinedField01 = "MERCHANT_DEFINED_FIELD_01";
 

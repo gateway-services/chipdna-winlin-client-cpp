@@ -309,6 +309,11 @@ namespace ChipDnaClientLib {
 		return tcpIpClient.StartCommand(parameter, response, identifier, SEND_PASS_THRU_COMMAND);
 	}
 
+	bool ClientHelper::RunRequestQueue(ParameterSet& parameter, ParameterSet& response) {
+		return tcpIpClient.StartCommand(parameter, response, identifier, RUN_REQUEST_QUEUE);
+	}
+
+
 	bool ClientHelper::ConnectAndConfigure(ParameterSet & parameter, ParameterSet & response) {
 		if (!apiKey.empty()) {
 			parameter.Add(ParameterKeys::ApiKey, this->apiKey);
@@ -426,6 +431,9 @@ namespace ChipDnaClientLib {
 				else if (*event->eventType == "DccRateInformation" && dccRateInformation) {
 					if (dccRateInformation != nullptr) dccRateInformation(params);
 				}
+				else if (*event->eventType == "RequestQueueRunCompleted" && requestQueueRunCompleted) {
+					if (requestQueueRunCompleted != nullptr) requestQueueRunCompleted(params);
+				}
 				else if (*event->eventType == "ErrorEvent" && errorEventMethod) {
 					std::string error = event->response->ToString();
 					if (errorEventMethod != nullptr) errorEventMethod(error);
@@ -519,6 +527,10 @@ namespace ChipDnaClientLib {
 		dccRateInformation = onEventReceived;
 	}
 
+	void ClientHelper::RequestQueueRunCompletedEvent(OnEventReceived onEventReceived) {
+		requestQueueRunCompleted = onEventReceived;
+	}
+
 	bool ClientHelper::isConnected() {
 		return !isExiting && tcpIpClient.IsConnected();
 	}
@@ -553,7 +565,7 @@ namespace ChipDnaClientLib {
 	const std::string ClientHelper::SEND_PASS_THRU_COMMAND = "SendPassThruCommand";
 	const std::string ClientHelper::CONNECT_AND_CONFIGURE = "ConnectAndConfigure";
 	const std::string ClientHelper::CUSTOM_COMMAND = "CustomCommand";
+	const std::string ClientHelper::RUN_REQUEST_QUEUE = "RunRequestQueue";
 
-#pragma endregion 
-
+#pragma endregion
 }

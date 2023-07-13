@@ -33,6 +33,10 @@ namespace ChipDNA {
 	static const std::string SOCKETDATA_TAG = "Server";
 	static const std::string SAVE_RECEIPT_TAG = "SaveReceipt";
 	static const std::string PROVIDER_NAME_TAG = "SslHostName";
+	static const std::string MERCHAT_STREET_ADDRESS_TAG = "MerchantStreetAddress";
+	static const std::string MERCHANT_CITY_STATE_ZIP_TAG = "MerchantCityStateZip";
+	static const std::string MERCHANT_PHONE_NUMBER_TAG = "MerchantPhoneNumber";
+	static const std::string MERCHANDISE_DESCRIPTION = "MerchandiseDescription";
 
 	Configparser::~Configparser()
 	{
@@ -49,6 +53,22 @@ namespace ChipDNA {
 
 	std::string Configparser::apiKey() {
 		return getElementTextByProperties(API_KEY_TAG);
+	}
+
+	std::string Configparser::merchantStreetAddress() {
+		return getElementTextByProperties(MERCHAT_STREET_ADDRESS_TAG);
+	}
+
+	std::string Configparser::merchantCityStateZip() {
+		return getElementTextByProperties(MERCHANT_CITY_STATE_ZIP_TAG);
+	}
+
+	std::string Configparser::merchantPhoneNumber() {
+		return getElementTextByProperties(MERCHANT_PHONE_NUMBER_TAG);
+	}
+
+	std::string Configparser::merchandiseDescription() {
+		return getElementTextByProperties(MERCHANDISE_DESCRIPTION);
 	}
 
 	std::string Configparser::connectaddress()

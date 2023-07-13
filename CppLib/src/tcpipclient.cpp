@@ -13,7 +13,8 @@ namespace ChipDnaClientLib {
 #define _WINSOCKAPI_    // stops windows.h including winsock.h
 #include <windows.h>
 #include <Wincrypt.h>
-
+#define _CRT_INTERNAL_NONSTDC_NAMES 0
+#include <openssl/applink.c> 
 
 	static X509_STORE * GetCert(X509_STORE *store) {
 		HCERTSTORE hSystemStore;
@@ -78,7 +79,6 @@ namespace ChipDnaClientLib {
 
 	bool TcpIpClient::connectSSL(const std::string ipAddress, const std::string port) {
 		SSL_library_init();
-		ERR_load_BIO_strings();
 		SSL_load_error_strings();
 		OpenSSL_add_all_algorithms();
 		ctx = SSL_CTX_new(SSLv23_client_method());
@@ -108,6 +108,8 @@ namespace ChipDnaClientLib {
 		/* Set the SSL_MODE_AUTO_RETRY flag */
 		BIO_get_ssl(bio, &ssl);
 		SSL_set_mode(ssl, SSL_MODE_AUTO_RETRY);
+		SSL_set_min_proto_version(ssl, TLS1_2_VERSION);
+		SSL_set_max_proto_version(ssl, TLS1_2_VERSION);
 		std::stringstream stringStream;
 		stringStream << ipAddress << ":" << port;
 		BIO_set_conn_hostname(bio, stringStream.str().c_str());

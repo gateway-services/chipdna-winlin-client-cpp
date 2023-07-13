@@ -4,6 +4,7 @@
 #include <list>
 #include <map>
 #include <string>
+#define HAVE_STRUCT_TIMESPEC
 #include <pthread.h>
 #include <functional>
 #include "parameterset.h"
@@ -175,7 +176,7 @@ namespace ChipDnaClientLib {
 		* \brief
 		*	Call ContinueSignatureVerification when the merchant has completed the signature verification process.
 		*
-		* Continues an auto-confirm transaction if signature verification is required and a {@link signatureVerificationRequestedEvent} is fired the client must call this method for transaction processing to resume. 
+		* Continues an auto-confirm transaction if signature verification is required and a {@link signatureVerificationRequestedEvent} is fired the client must call this method for transaction processing to resume.
 		* \param parameter {@link ParameterSet}
 		* 	Parameter collection containing the following name-value pairs: <BR>
 		* 	{@link ParameterKeys.SignatureVerificationResult} Required. <BR>
@@ -183,6 +184,21 @@ namespace ChipDnaClientLib {
 		* \return True if the command has been processed correctly by the server
 		*/
 		bool ContinueSignatureVerification(ParameterSet& parameter, ParameterSet& response);
+
+		/**
+		* \brief
+		*   Immediately runs the request queue and also gives the option to run failed transactions.
+		* 
+		* \param parameter {@link ParameterSet}
+		* 	Parameter collection containing the following name-value pairs: <BR>
+		* 	{@link ParameterKeys.RequestQueueType} Optional - Default is {@link RequestQueueTypes.Pending}. <BR>
+		* 	{@link ParameterKeys.RunFailedTransactionsFromDate} Required if {@link ParameterKeys.RequestQueueType} is either {@link RequestQueueTypes.Failed} or {@link RequestQueueTypes.PendingAndFailed}.
+		* \param response {@link ParameterSet} <BR>
+		* 	Parameter collection containing the following name-value pairs: <BR>
+		* 	{@link ParameterKeys.Errors} Present only when error condition encountered. Values may come from {@link ParameterTokens.ValidationErrorCode}, {@link ParameterTokens.ChipDnaErrorCode} and {@link ParameterTokens.PaymentEngineErrorCode}.
+		* \return True if the command has been processed correctly by the server
+		*/
+		bool RunRequestQueue(ParameterSet& parameter, ParameterSet& response);
 
 		/**
 		* \brief
@@ -265,7 +281,7 @@ namespace ChipDnaClientLib {
 		* \param response {@link ParameterSet} with a parameter collection containing the following name-value pairs:<BR>
 		* 	{@link ParameterKeys.TransactionResult} Always present.<BR>
 		* 	{@link ParameterKeys.ReceiptData} Present on completed transaction, except when terminated.<BR>
-		* 	{@link ParameterKeys.Errors} Present only when error condition encountered. Values may come from {@link ParameterTokens.ValidationErrorCode}, {@link ParameterTokens.ChipDnaErrorCode} and {@link PaymentEngineErrorCode}
+		* 	{@link ParameterKeys.Errors} Present only when error condition encountered. Values may come from {@link ParameterTokens.ValidationErrorCode}, {@link ParameterTokens.ChipDnaErrorCode} and {@link PaymentEngineErrorCode}.
 		* 	{@link ParameterKeys.ErrorDescription} Present only when error condition encountered and a description message is available.
 		* \return True if the command has been processed correctly by the server
 		*/
@@ -640,6 +656,17 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
+		*	Fired by the server after the request queue is processed.
+		*
+		* The following parameters will be returned: <BR>
+		* {@link ParameterKeys.RequestQueueType} Always present.<BR>
+		* {@link ParameterKeys.RequestQueueReport} Always present.<BR/>
+		* {@link ParameterKeys.Errors} Only when error condition encountered. Values may come from {@link ParameterTokens.PaymentEngineErrorCode}.<BR/>
+		**/
+		void RequestQueueRunCompletedEvent(OnEventReceived onEventReceived);
+
+		/**
+		* \brief
 		*  Used to notify of exceptions in the ClientHelper. A message detailing the error will be returned. If this occurs it is most likely due to communication problems with the ChipDNA Server
 		*/
 		void ErrorEvent(OnDisconnection onDisconnection);
@@ -662,6 +689,7 @@ namespace ChipDnaClientLib {
 		OnEventReceived connectAndConfigureResponse;
 		OnEventReceived configurationUpdate;
 		OnEventReceived dccRateInformation;
+		OnEventReceived requestQueueRunCompleted;
 		OnDisconnection errorEventMethod;
 		static void onChipDnaClientEvent(std::string* eventType, Response* response);
 		static void* handleEvent(void* o);
@@ -693,6 +721,7 @@ namespace ChipDnaClientLib {
 		static const std::string SEND_PASS_THRU_COMMAND;
 		static const std::string CONNECT_AND_CONFIGURE;
 		static const std::string CUSTOM_COMMAND;
+		static const std::string RUN_REQUEST_QUEUE;
 
 		//Primitives
 		std::string identifier;

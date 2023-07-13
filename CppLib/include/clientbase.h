@@ -1,6 +1,7 @@
 #ifndef CLIENTBASE_H
 #define CLIENTBASE_H
 
+#define HAVE_STRUCT_TIMESPEC
 #include <pthread.h>
 #include <queue>
 #include "responsecontainer.h"

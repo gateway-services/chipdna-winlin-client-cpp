@@ -24,7 +24,7 @@ static std::string POS_ID = "PosId";
 static std::string PORT = "Port";
 static std::string SAVE_RECEIPT = "SaveReceipt";
 static std::string PROVIDER_NAME = "SslHostName";
-static std::string EXIT_MESSAGE = "\r\nPress a key to exit!\r\n";
+static std::string EXIT_MESSAGE = "\nPress a key to exit!\n";
 static int DEFAULT_PORT = 1869;
 static std::string DEFAULT_IP_ADDRESS = "127.0.0.1";
 

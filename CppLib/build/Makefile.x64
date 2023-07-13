@@ -5,7 +5,7 @@ CPP_COMPILE = g++ -m64
 CPP_LIB_NAME = libstdc++
 CPP_LIB_PATH = $(CPP_ROOTPATH)/$(CPP_VERSION)/$(CPP_LIB_NAME).a
 CFLAGS = 
-LFLAGS = -L/usr/lib
+LDFLAGS = -L/usr/lib
 OBJ_DIR = obj-x64
 
 LIBCHIPDNACLIENT_SRC_PATH = ../src
@@ -25,6 +25,8 @@ LIBCHIPDNACLIENT_SRC_ = \
 	parameterset.cpp \
 	pugixml.cpp \
 	receiptdata.cpp \
+	requestqueueruncompletedobject.cpp \
+	requestqueuereport.cpp \
 	response.cpp \
 	responsecontainer.cpp \
 	tcpipclient.cpp \
@@ -35,12 +37,12 @@ LIBCHIPDNACLIENT_OBJ = $(LIBCHIPDNACLIENT_SRC:.cpp=.o)
 
 DEPENDENCIES = -lrt 
 
-G++ = $(CPP_COMPILE) -D_GLIBC_2_0_SOURCE $(LFLAGS)
+G++ = $(CPP_COMPILE) -D_GLIBC_2_0_SOURCE $(LDFLAGS)
 
 all: libchipdnaclient
 
 $(OBJ_DIR)/%.o: $(LIBCHIPDNACLIENT_SRC_PATH)/%.cpp | $(OBJ_DIR)
-	$(G++) -c -I$(LIBCHIPDNACLIENT_INC_PATH) -I$(LIBOPENSSL_INC) -o $@ $< $(CFLAGS)
+	$(G++) -c -o $@ $< $(CFLAGS) -I$(LIBCHIPDNACLIENT_INC_PATH) -I$(LIBOPENSSL_INC)
 
 $(OBJ_DIR):	 
 	mkdir -p $(OBJ_DIR)

@@ -33,6 +33,10 @@ namespace ChipDnaClientLib {
 		std::string IsProcessingTransaction;
 		std::string AvailabilityError;
 		std::vector<AvailabilityErrorStruct> AvailabilityErrorList;
+		std::string BatteryPercentage;
+		std::string BatteryChargingStatus;
+		std::string BatteryStatusUpdateDateTime;
+		std::string BatteryStatusUpdateDateTimeFormat;
 
 	} PaymentDeviceStruct;
 
@@ -69,6 +73,10 @@ namespace ChipDnaClientLib {
 	static const std::string AVAILABILITY_ERROR = "AvailabilityError";
 	static const std::string AVAILABILITY_ERROR_TAG = "AvailabilityErrorInformation";
 	static const std::string PAYMENT_DEVICE_AVAILABILITY_ERROR = "PaymentDeviceAvailabilityErrorInformation";
+	static const std::string BATTERY_PERCENTAGE = "BatteryPercentage";
+	static const std::string BATTERY_CHARGING_STATUS = "BatteryChargingStatus";
+	static const std::string BATTERY_STATUS_UPDATE_DATETIME = "BatteryStatusUpdateDateTime";
+	static const std::string BATTERY_STATUS_UPDATE_DATETIME_FORMAT = "BatteryStatusUpdateDateTimeFormat";
 
 	// ChipDNA Status
 	static const std::string SERVER_STATUS_TAG = "ServerStatus";
@@ -481,6 +489,33 @@ namespace ChipDnaClientLib {
 
 			/**
 			* \brief
+			*	Gets the battery percentage of the currently connected device (available for selected devices).
+			*/
+			std::string GetBatteryPercentage();
+
+			/**
+			* \brief
+			*	Gets the battery charging status of the currently connected device (available for selected devices). Returns "Not Charging", "Charging" or "Fully Charged".
+			*/
+			std::string GetBatteryChargingStatus();
+
+			/**
+			* \brief
+			*	Gets the date and time for the last battery update of the currently connected device (available for selected devices).
+			* 
+			*   Returned using the local date, time, and time zone of the Server.
+			*   Format specified by GetBatteryStatusUpdateDateTimeFormat().
+			*/
+			std::string GetBatteryStatusUpdateDateTime();
+
+			/**
+			* \brief
+			*	Gets the date and time format used for GetBatteryStatusUpdateDateTime() (available for selected devices). Returns "dd/MM/yyyy HH:mm:ss".
+			*/
+			std::string GetBatteryStatusUpdateDateTimeFormat();
+
+			/**
+			* \brief
 			* 	Get a string representation of the payment device status
 			*/
 			std::string ToString();
@@ -507,6 +542,10 @@ namespace ChipDnaClientLib {
 			std::string availabilityError;
 			std::vector<PaymentDeviceAvailabilityErrorInformation> availabilityErrorInformation;
 			std::string configuredDeviceModel;
+			std::string batteryPercentage;
+			std::string batteryChargingStatus;
+			std::string batteryStatusUpdateDateTime;
+			std::string batteryStatusUpdateDateTimeFormat;
 
 		};
 

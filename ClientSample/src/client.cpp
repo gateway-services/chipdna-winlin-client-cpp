@@ -7,17 +7,19 @@
 #include <time.h>
 #include <map>
 #include <string>
-
+#include <algorithm>
 
 #include "parameterkeys.h"
 #include "parameterset.h"
 #include "chipdnastatus.h"
 #include "merchantdata.h"
+#include "requestqueueruncompletedobject.h"
 #include "cardhash.h"
 #include "cardstatus.h"
 #include "clienthelper.h"
 
 #ifdef WIN32
+#include <Windows.h>
 #include <direct.h>
 #define GetCurrentDir _getcwd
 #else
@@ -36,9 +38,9 @@ namespace ChipDNA {
 	using namespace ParameterTokens;
 
 //default messages for voice referral
-const std::string AuthCodeInput = "\r\nAuth Code (Default=12345)";
+const std::string AuthCodeInput = "\nAuth Code (Default=12345)";
 const std::string AuthCodeDefault = "12345";
-const std::string VoiceReferralContinue = "\r\nVoice Referral Approved [True,False] (Default=True)";
+const std::string VoiceReferralContinue = "\nVoice Referral Approved [True,False] (Default=True)";
 const std::string VoiceReferralDefault = "true";
 const std::string VoiceReferralError = "ContinueVoiceReferral Errors ->";
 const std::string VoiceReferralStart = "*Waiting for Continue Voice Referral command -> Press F to continue *";
@@ -119,32 +121,34 @@ static std::string getCommandMenu( ){
 
 	std::stringstream stringStream;
 	stringStream << std::endl;
-	stringStream << "S \t Current Status\r\n";
-	stringStream << "N \t Get Card Status\r\n";
-	stringStream << "W \t Get Merchant Data\r\n";
-	stringStream << "M \t Set Idle Message on Supported PED\r\n";
-	stringStream << "R \t Process Refund By Reference\r\n";
-	stringStream << "P \t Start Transaction\r\n";
-	stringStream << "C \t Confirm Transaction\r\n";
-	stringStream << "V \t Void Transaction\r\n";
-	stringStream << "T \t Terminate Transaction (Only works after 'P' command otherwise ignored)\r\n";
-	stringStream << "U \t Update Transaction\r\n";
-	stringStream << "K \t Release Card\r\n";
-	stringStream << "L \t Continue Transaction\r\n";
-	stringStream << "F \t Continue Voice Referral\r\n";
-	stringStream << "D \t Continue Deferred Authorization\r\n";
-	stringStream << "J \t Continue Signature Verification\r\n";
-	stringStream << "I \t Transaction Information\r\n";
-	stringStream << "+ \t Toggle Client Verbose Debug\r\n";
-	stringStream << "x \t Request TMS Update\r\n";
-	stringStream << "G \t Get Card Details\r\n";
-	stringStream << "Q \t Quit Client Application\r\n";
-	stringStream << "B \t Open Pass Thru Session\r\n";
-	stringStream << "E \t Close Pass Thru Session\r\n";
-	stringStream << "H \t Send Pass Thru Command\r\n";
-	stringStream << "O \t Connect And Configure\r\n";
-	stringStream << "A \t Custom Command\r\n";
-	stringStream << "Press a key\r\n" << std::endl;
+	stringStream << "S \t Current Status\n";
+	stringStream << "N \t Get Card Status\n";
+	stringStream << "W \t Get Merchant Data\n";
+	stringStream << "M \t Set Idle Message on Supported PED\n";
+	stringStream << "R \t Process Refund By Reference\n";
+	stringStream << "P \t Start Transaction\n";
+	stringStream << "C \t Confirm Transaction\n";
+	stringStream << "V \t Void Transaction\n";
+	stringStream << "T \t Terminate Transaction (Only works after 'P' command otherwise ignored)\n";
+	stringStream << "U \t Update Transaction\n";
+	stringStream << "K \t Release Card\n";
+	stringStream << "L \t Continue Transaction\n";
+	stringStream << "F \t Continue Voice Referral\n";
+	stringStream << "D \t Continue Deferred Authorization\n";
+	stringStream << "J \t Continue Signature Verification\n";
+	stringStream << "I \t Transaction Information\n";
+	stringStream << "+ \t Toggle Client Verbose Debug\n";
+	stringStream << "x \t Request TMS Update\n";
+	stringStream << "G \t Get Card Details\n";
+	stringStream << "Q \t Quit Client Application\n";
+	stringStream << "B \t Open Pass Thru Session\n";
+	stringStream << "E \t Close Pass Thru Session\n";
+	stringStream << "H \t Send Pass Thru Command\n";
+	stringStream << "O \t Connect And Configure\n";
+	stringStream << "A \t Custom Command\n";
+	stringStream << "Y \t Show/Hide the Request Queue Event response\n";
+	stringStream << "Z \t Run the Request Queue\n";
+	stringStream << "Press a key\n" << std::endl;
 	return stringStream.str();
 }
 
@@ -175,6 +179,10 @@ std::string getPrintableCardHash(std::vector<CardHash> & cardHashes){
 
 	Client::Client(const std::string identifier, const std::string ipAddress, const int port, bool enableSSL, bool saveReceipt, Configparser& settings) : settings_(settings)
 {
+#ifdef WIN32
+	SetConsoleOutputCP(CP_UTF8);
+	SetConsoleCP(CP_UTF8);
+#endif
 	errorOccured = false;
 	m_clientHelper = NULL;
 	this->saveReceipt = saveReceipt;
@@ -185,6 +193,7 @@ std::string getPrintableCardHash(std::vector<CardHash> & cardHashes){
 	getCardDetailsInProgress = false;
 	deferredAuthorizationDone = false;
 	transactionInProgress = false;
+	requestQueueRunCompletedEventSubscribed = false;
 	
 	if (settings.apiKey() != "") {
 		if (identifier != "") {
@@ -219,8 +228,7 @@ std::string getPrintableCardHash(std::vector<CardHash> & cardHashes){
 }
 
 void Client::run(){
-	std::string command = "";
-	
+	std::string command = "";	
 	while (true){
 		printConsoleCommands();
 		command = "";
@@ -309,7 +317,6 @@ void Client::computeInput(char command){
 	case 'G':
 		performGetCardDetails();
 		break;
-	case 'Y':
 	case 'F':
 		performVoiceReferral();	
 		break;
@@ -330,6 +337,12 @@ void Client::computeInput(char command){
 		break;
 	case 'A':
 		performCustomCommand();
+		break;
+	case 'Y':
+		toggleRequestQueueRunCompletedEvent();
+		break;
+	case 'Z':
+		runRequestQueue();
 		break;
 	default:
 		return;
@@ -405,16 +418,16 @@ void Client::getCardStatus() {
 void Client::requestTmsUpdate(){
 	ParameterSet parameter;
 	ParameterSet response;
-	std::string requestType = getUserInput("\r\nTMS Request Type. Default =[TmsConfiguration]");
+	std::string requestType = getUserInput("\nTMS Request Type. Default =[TmsConfiguration]");
 	if (!requestType.empty()){
 			parameter.Add(ParameterKeys::TmsRequestType, requestType);
 	}
-	std::string updateType = getUserInput("\r\nConfiguration Update Type. Default=[PARTIAL]");
+	std::string updateType = getUserInput("\nConfiguration Update Type. Default=[PARTIAL]");
 	if (!updateType.empty()) {
 			parameter.Add(ParameterKeys::TmsUpdateType, updateType);
 	}
 
-	std::string configUpdateSchedule = getUserInput("\r\nConfiguration Update Schedule. Default=[IMMEDIATE]");
+	std::string configUpdateSchedule = getUserInput("\nConfiguration Update Schedule. Default=[IMMEDIATE]");
 	if (!configUpdateSchedule.empty()) {
 			parameter.Add(ParameterKeys::ConfigurationUpdateSchedule, configUpdateSchedule);
 	}
@@ -470,21 +483,42 @@ void Client::performStartTransaction()
 	if (!panKeyEntry.empty() && strToUpper(panKeyEntry).compare("FALSE") != 0){
 			startTransParams.Add(ParameterKeys::PanKeyEntry, panKeyEntry);
 
-		std::string address = getUserInput("Please enter address information (Optional)");
-		if (!address.empty()){
+		if (!type.empty() && strToUpper(type).compare("REFUND") != 0)
+		{
+			std::string address = getUserInput("Please enter address information (Optional)");
+			if (!address.empty()) {
 				startTransParams.Add(ParameterKeys::CardholderAddress, address);
+			}
+
+			std::string zipcode = getUserInput("Please enter Postcode/Zipcode (Optional)");
+			if (!zipcode.empty()) {
+				startTransParams.Add(ParameterKeys::CardholderZipcode, zipcode);
+			}
 		}
 
-		std::string zipcode = getUserInput("Please enter Postcode/Zipcode (Optional)");
-		if (!zipcode.empty()){
-				startTransParams.Add(ParameterKeys::CardholderZipcode, zipcode);
+	}
+
+	if (strToUpper(type).compare("SALE") == 0)
+	{
+		bool firstStore = getFirstStore();
+
+		if (firstStore)
+		{
+			startTransParams.Add(ParameterKeys::CredentialOnFileFirstStore, "True");
+			std::string firstStoreReason = getFirstStoreReason();
+			if (!firstStoreReason.empty())
+			{
+				startTransParams.Add(ParameterKeys::CredentialOnFileReason, firstStoreReason);
+			}
+		}
+
+		std::string tipping = getTippingMethod(false, "DEFAULT");
+		if (!tipping.empty())
+		{
+			startTransParams.Add(ParameterKeys::TippingSupport, tipping);
 		}
 	}
-	
-	std::string tipping = getTippingMethod(false, "DEFAULT");
-	if (!tipping.empty())
-			startTransParams.Add(ParameterKeys::TippingSupport, tipping);
-
+		
 	ParameterSet response;
 		startTransParams += getExtraParams("StartTransaction");
 		if (m_clientHelper->StartTransaction(startTransParams, response)) {
@@ -593,6 +627,36 @@ void Client::performCustomCommand(){
 			std::cout << "performCustomCommand failed" << std::endl;
 }
 
+void Client::toggleRequestQueueRunCompletedEvent() {
+	requestQueueRunCompletedEventSubscribed = !requestQueueRunCompletedEventSubscribed;
+	std::cout << (requestQueueRunCompletedEventSubscribed ? "Subscribed to" : "Unsubscribed from") << " the RequestQueueRunCompletedEvent." << "\n" << std::endl;
+	if (requestQueueRunCompletedEventSubscribed) 
+		m_clientHelper->RequestQueueRunCompletedEvent(bind(&Client::requestQueueRunCompletedEvent, this, std::placeholders::_1));
+	else
+		m_clientHelper->RequestQueueRunCompletedEvent(OnEventReceived());
+}
+
+void Client::runRequestQueue() {
+	ParameterSet parameters;
+	std::string requestQueueType = getUserInput("Run failed transactions (Pending/Failed/PendingAndFailed)? Default=[Pending]");
+	
+	std::vector<RequestQueueTypes> failedRequestQueues = { RequestQueueTypes::Failed, RequestQueueTypes::PendingAndFailed };
+	const auto itRequestQueueType = std::find_if(failedRequestQueues.begin(), failedRequestQueues.end(), [requestQueueType, this](RequestQueueTypes rqType) { return strToUpper(RequestQueueTypeMapReverseGenerator::CreateMap()[rqType]) == strToUpper(requestQueueType); });
+	if (itRequestQueueType != failedRequestQueues.end()) {
+		parameters.Add(ParameterKeys::RequestQueueType, RequestQueueTypeToString.at(*itRequestQueueType));
+		const std::string runFailedTransactionsFromDate = getUserInput("From when should the failed transactions be run (yyyyMMddHHmmss)?");
+		parameters.Add(ParameterKeys::RunFailedTransactionsFromDate, runFailedTransactionsFromDate);
+	}
+
+	ParameterSet response;
+	if (m_clientHelper->RunRequestQueue(parameters, response)) {
+		if (response.ContainsKey(ParameterKeys::Errors))
+			std::cout << "runRequestQueue Errors:\t" << response.GetValue(ParameterKeys::Errors);
+		else
+			std::cout << response.ToString() << std::endl;
+	}
+}
+
 void Client::performRefundTransactionByReference(){
 	ParameterSet transactionValues;
 	ParameterSet response;
@@ -608,10 +672,10 @@ void Client::performRefundTransactionByReference(){
 		transactionValues += getExtraParams("LinkedRefundTransaction");
 	if (m_clientHelper->LinkedRefundTransaction(transactionValues, response)){
 			if (response.ContainsKey(ParameterKeys::Errors)) {
-				std::cout << "performRefundTransactionByReference Errors:\t" << response.GetValue(ParameterKeys::Errors) << "\n\r" << std::endl;
+				std::cout << "performRefundTransactionByReference Errors:\t" << response.GetValue(ParameterKeys::Errors) << "\n" << std::endl;
 		}
 			if (response.ContainsKey(ParameterKeys::ErrorDescription)) {
-				std::cout << "Error Description: " << response.GetValue(ParameterKeys::ErrorDescription) << "\n\r" << std::endl;
+				std::cout << "Error Description: " << response.GetValue(ParameterKeys::ErrorDescription) << "\n" << std::endl;
 		}
 			if (response.ContainsKey(ParameterKeys::TransactionId)) {
 				std::cout << "Transaction ID: " << response.GetValue(ParameterKeys::TransactionId) << std::endl;
@@ -658,10 +722,10 @@ void Client::performConfirmTransaction(){
 		}
 	}
 	else {
-			std::cout << "performConfirmTransaction Errors:\t" << response.GetValue(ParameterKeys::Errors) << "\n\r" << std::endl;
+			std::cout << "performConfirmTransaction Errors:\t" << response.GetValue(ParameterKeys::Errors) << "\n" << std::endl;
 	}
 	if (response.ContainsKey(ParameterKeys::ErrorDescription)) {
-		std::cout << "Error Description: " << response.GetValue(ParameterKeys::ErrorDescription) << "\n\r" << std::endl;
+		std::cout << "Error Description: " << response.GetValue(ParameterKeys::ErrorDescription) << "\n" << std::endl;
 	}
 }
 
@@ -689,10 +753,10 @@ void Client::performVoidTransaction(){
 		}
 	}
 	else {
-			std::cout << "performVoidTransaction Errors:\t" << response.GetValue(ParameterKeys::Errors) << "\n\r" << std::endl;
+			std::cout << "performVoidTransaction Errors:\t" << response.GetValue(ParameterKeys::Errors) << "\n" << std::endl;
 	}
 	if (response.ContainsKey(ParameterKeys::ErrorDescription)) {
-		std::cout << "Error Description: " << response.GetValue(ParameterKeys::ErrorDescription) << "\n\r" << std::endl;
+		std::cout << "Error Description: " << response.GetValue(ParameterKeys::ErrorDescription) << "\n" << std::endl;
 	}
 }
 
@@ -737,18 +801,47 @@ void Client::printReceipt(ReceiptData * receipt){
 	std::stringstream stringStream;
 	std::string headerFooter = "";
 	headerFooter.insert(0, 80, '=');
-	stringStream << headerFooter << "\n\r";
+	stringStream << headerFooter << "\n";
 		std::vector<ReceiptItem>& items = receipt->GetItems();
 	for (size_t i = 0; i < items.size(); i++){
 			std::string itemId = items[i].ReceiptEntryId;
 			std::string itemType = GetStringOfReceiptItemType(items[i].ReceiptItemType);
 		itemId.insert(itemId.size(), 40 - (itemId.size() + itemType.size()), '-');
 		stringStream << itemId << itemType << " => ";
+			/*
+			 * MerchantStreetAddress, MerchantCityStateZip and MerchantPhoneNumber
+			 * are not populated by ChipDNA and must be populated by the integration,
+			 * when they are present in ReceiptData.
+			 * The same also applies to MerchandiseDescription.
+			 */
 			if (!items[i].Label.empty())
 				stringStream << items[i].Label << " : ";
-			stringStream << items[i].Value << "\n\r";
+			if (items[i].ReceiptEntryId == "MerchantStreetAddress")
+			{
+				//e.g. 123 Western Boulevard
+				stringStream << settings_.merchantStreetAddress() << "\n";
+			}
+			else if (items[i].ReceiptEntryId == "MerchantCityStateZip")
+			{
+				//e.g. Chicago, IL, 60007
+				stringStream << settings_.merchantCityStateZip() << "\n";
+			}
+			else if (items[i].ReceiptEntryId == "MerchantPhoneNumber")
+			{
+				//e.g. (555) 555-1234
+				stringStream << settings_.merchantPhoneNumber() << "\n";
+			}
+			else if (items[i].ReceiptEntryId == "MerchandiseDescription")
+			{
+				//e.g. Food and drinks
+				stringStream << settings_.merchandiseDescription() << "\n";
+			}			
+			else
+			{
+				stringStream << items[i].Value << "\n";
+			}
 	}
-	stringStream << "\n\r" << headerFooter << std::endl;
+	stringStream << "\n" << headerFooter << std::endl;
 	std::cout << stringStream.str();
 	if (saveReceipt){
 		const std::string currentPath = getCurrentPath();
@@ -807,10 +900,30 @@ std::string Client::getAmount(const bool isRequired){
 	return amount;
 }
 
+std::string Client::getFirstStoreReason() {
+	std::string reason = "";
+	std::stringstream stringStream;
+	stringStream << "Credential On File Transaction Reason? (Optional)";
+	reason = getUserInput(stringStream.str());
+	return reason;
+}
+
+bool Client::getFirstStore() {
+	std::string isFirstStore;
+	std::stringstream stringStream;
+	stringStream << "Credential On File First Store Transaction? [True,False] (Optional)";
+	
+	isFirstStore = getUserInput(stringStream.str());
+	std::transform(isFirstStore.begin(), isFirstStore.end(), isFirstStore.begin(), ::toupper);
+
+	if (isFirstStore.empty()) return false;
+	return isFirstStore == "TRUE";
+}
+
 ParameterSet Client::getRequestedParameterSet(ParameterSet parameter) {
 	std::string key = "";
 	std::stringstream stringStream;
-	stringStream << "\r\nPlease Enter Requested Parameters (Comma Separated) [eg CHIPDNA_STATUS,TMS_STATUS]: (Default = Returns all parameters)";
+	stringStream << "\nPlease Enter Requested Parameters (Comma Separated) [eg CHIPDNA_STATUS,TMS_STATUS]: (Default = Returns all parameters)";
 
 	std::string input =  getUserInput(stringStream.str());
 	std::stringstream ss(input);
@@ -1013,7 +1126,7 @@ void Client::performDeferredAuthorization() {
 void Client::performOpenPassThruSession(){
 	ParameterSet param;
 
-	std::string input = getUserInput("\r\nEnter payment device ID");
+	std::string input = getUserInput("\nEnter payment device ID");
 	if (!input.empty())
 			param.Add(ParameterKeys::PaymentDeviceIdentifier, input);
 	
@@ -1030,7 +1143,7 @@ void Client::performOpenPassThruSession(){
 void Client::performClosePassThruSession(){
 	ParameterSet param;
 
-	std::string input = getUserInput("\r\nEnter payment device ID");
+	std::string input = getUserInput("\nEnter payment device ID");
 	if (!input.empty())
 			param.Add(ParameterKeys::PaymentDeviceIdentifier, input);
 
@@ -1047,11 +1160,11 @@ void Client::performClosePassThruSession(){
 void Client::performSendPassThruCommand(){
 	ParameterSet param;
 
-	std::string input = getUserInput("\r\nEnter payment device ID");
+	std::string input = getUserInput("\nEnter payment device ID");
 	if (!input.empty())
 			param.Add(ParameterKeys::PaymentDeviceIdentifier, input);
 
-	input = getUserInput("\r\nEnter command (hex string)");
+	input = getUserInput("\nEnter command (hex string)");
 	if (!input.empty())
 			param.Add(ParameterKeys::Data, input);
 
@@ -1080,7 +1193,7 @@ void Client::cardDetailsEvent(KeyValue & parameters)
 
 		
 	}
-	std::cout << "cardDetailsEvent: " << stringStream.str() << "\n\r" << std::endl;
+	std::cout << "cardDetailsEvent: " << stringStream.str() << "\n" << std::endl;
 
 	getCardDetailsInProgress = false;
 	printConsoleCommands();
@@ -1088,7 +1201,7 @@ void Client::cardDetailsEvent(KeyValue & parameters)
 
 void Client::cardNotificationEvent(KeyValue & parameters)
 {
-	std::cout << "cardNotificationEvent: " << printParameters(parameters) << "\n\r" << std::endl;
+	std::cout << "cardNotificationEvent: " << printParameters(parameters) << "\n" << std::endl;
 }
 
 void Client::transactionFinishedEvent(KeyValue & parameters)
@@ -1115,10 +1228,10 @@ void Client::transactionFinishedEvent(KeyValue & parameters)
 		stringStream << " [" << it->first << ", " << value << "] ";
 		
 	}
-	std::cout << stringStream.str() << "\n\r" << std::endl;
+	std::cout << stringStream.str() << "\n" << std::endl;
 	
 	if(!errorDescription.empty()){
-		std::cout << "Error Description: " << errorDescription << "\n\r" << std::endl;
+		std::cout << "Error Description: " << errorDescription << "\n" << std::endl;
 	}
 
 	if (ptr_receiptData != NULL){
@@ -1155,10 +1268,10 @@ void Client::signatureVerificationRequestedEvent(KeyValue & parameters)
 
 	stringStream << (eventParams.str().length() == 0 ? "[There are no set parameters for this event]" : eventParams.str());
 
-	std::cout << stringStream.str() << "\n\r" << std::endl;
+	std::cout << stringStream.str() << "\n" << std::endl;
 	
 	if(!errorDescription.empty()){
-		std::cout << "Error Description: " << errorDescription << "\n\r" << std::endl;
+		std::cout << "Error Description: " << errorDescription << "\n" << std::endl;
 	}
 
 	if (ptr_receiptData != NULL){
@@ -1171,13 +1284,13 @@ void Client::signatureVerificationRequestedEvent(KeyValue & parameters)
 
 void Client::transactionPauseEvent(KeyValue & parameters)
 {
-	std::cout << "transactionPauseEvent: " << printParameters(parameters) << "\n\r" << std::endl;
+	std::cout << "transactionPauseEvent: " << printParameters(parameters) << "\n" << std::endl;
 	std::cout << "Press l to continue transaction" << std::endl;
 }
 
 void Client::transactionUpdateEvent(KeyValue & parameters)
 {
-	std::cout << "transactionUpdateEvent: " << printParameters(parameters) << "\n\r" << std::endl;
+	std::cout << "transactionUpdateEvent: " << printParameters(parameters) << "\n" << std::endl;
 }
 
 void Client::voiceReferralEvent(KeyValue & parameters)
@@ -1229,40 +1342,49 @@ void Client::paymentDeviceAvailabilityChangeEvent(KeyValue & parameters)
 
 void Client::tmsUpdateEvent(KeyValue & parameters)
 {
-	std::cout << "tmsUpdateEvent: " << printParameters(parameters) << "\n\r" << std::endl;
+	std::cout << "tmsUpdateEvent: " << printParameters(parameters) << "\n" << std::endl;
 }
 
 void Client::updateTransactionParametersFinishedEvent(KeyValue & parameters)
 {
-	std::cout << "updateTransactionParametersFinishedEvent: " << printParameters(parameters) << "\n\r" << std::endl;
+	std::cout << "updateTransactionParametersFinishedEvent: " << printParameters(parameters) << "\n" << std::endl;
 }
 
 void Client::openPassThruSessionResponseEvent(KeyValue & parameters)
 {
-	std::cout << "openPassThruSessionResponseEvent: " << printParameters(parameters) << "\n\r" << std::endl;
+	std::cout << "openPassThruSessionResponseEvent: " << printParameters(parameters) << "\n" << std::endl;
 }
 
 void Client::sendPassThruCommandResponseEvent(KeyValue & parameters)
 {
-	std::cout << "sendPassThruCommandResponseEvent: " << printParameters(parameters) << "\n\r" << std::endl;
+	std::cout << "sendPassThruCommandResponseEvent: " << printParameters(parameters) << "\n" << std::endl;
 }
 
 void Client::connectAndConfigureEvent(KeyValue & parameters) {
-	std::cout << "connectAndConfigureEvent: " << printParameters(parameters) << "\n\r" << std::endl;
+	std::cout << "connectAndConfigureEvent: " << printParameters(parameters) << "\n" << std::endl;
 }
 
 void Client::configurationUpdateEvent(KeyValue & parameters) {
-	std::cout << "configurationUpdateEvent: " << printParameters(parameters) << "\n\r" << std::endl;
+	std::cout << "configurationUpdateEvent: " << printParameters(parameters) << "\n" << std::endl;
 }
 
 void Client::dccRateInformationEvent(KeyValue & parameters)
 {
-	std::cout << "dccRateInformationEvent: " << printParameters(parameters) << "\n\r" << std::endl;
+	std::cout << "dccRateInformationEvent: " << printParameters(parameters) << "\n" << std::endl;
 }
+
+void Client::requestQueueRunCompletedEvent(KeyValue & parameters)
+{
+	auto parameterSet = ParameterSet(parameters);
+	RequestQueueRunCompletedObject* requestQueueRunCompletedObject = RequestQueueRunCompletedObject::ParseFromResponse(parameterSet);
+	std::cout << requestQueueRunCompletedObject->ToString() << "\n" << std::endl;
+}
+
 void Client::errorEvent(std::string & details)
 {
-		std::cout << "Error: Connection has been closed, Details: " << details << std::endl;
+	std::cout << "Error: Connection has been closed, Details: " << details << std::endl;
 }
+
 
 bool Client::isNumber(const std::string& num) {
 	std::string::const_iterator iterator = num.begin();

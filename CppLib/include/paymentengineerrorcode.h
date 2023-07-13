@@ -562,8 +562,13 @@ namespace ChipDnaClientLib {
 			* \brief
 			*	Void request failed to go online and wasn't able to be stored offline. Void requests can be retried using ClientHelper.VoidTransaction.
 			*/
-			VoidRequestFailed
+			VoidRequestFailed,
 
+			/**
+			* \brief
+			*	The request queue couldn't be started since it is already running.
+			*/
+			RequestQueueAlreadyRunning
 		};
 
 
@@ -661,6 +666,7 @@ namespace ChipDnaClientLib {
 				map["DeviceRegistrationFailed"] = DeviceRegistrationFailed;
 				map["ConfirmRequestFailed"] = ConfirmRequestFailed;
 				map["VoidRequestFailed"] = VoidRequestFailed;
+				map["RequestQueueAlreadyRunning"] = RequestQueueAlreadyRunning;
 				return map;
 			}
 		};
