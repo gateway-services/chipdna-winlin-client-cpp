@@ -1,15 +1,26 @@
-LIBOPENSSL_INC = /usr/include/
-CPP_ROOTPATH = /usr/lib/gcc/x86_64-linux-gnu
-CPP_VERSION = 5.4.0
-CPP_COMPILE = g++ -m64
-CPP_LIB_NAME = libstdc++
-CFLAGS = 
-LDFLAGS = -L/usr/lib
+# Set these values as appropriate; example values below.
+# LIBOPENSSL_INC = /opt/openssl-3/include/
+#
+# CPP_COMPILE = "/opt/rh/gcc-toolset-12/root/bin/g++ -m64"
+# CPP_LIB_NAME = libstdc++
+# CPP_LIB_PATH = /opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12
+# CFLAGS = -std=c++11
+# LDFLAGS = -L/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12
+# AR = /opt/rh/gcc-toolset-12/root/bin/gcc-ar
+
+LIBOPENSSL_INC =
+
+CPP_COMPILE =
+CPP_LIB_NAME =
+CPP_LIB_PATH =
+CFLAGS =
+LDFLAGS =
+AR =
 OBJ_DIR = obj-x64
 
+LIBCHIPDNACLIENT_LIBNAME = libchipdnaclient-x64.a
 LIBCHIPDNACLIENT_SRC_PATH = ../src
 LIBCHIPDNACLIENT_INC_PATH = ../include
-LIBCHIPDNACLIENT_LIBNAME = libchipdnaclient-x64.a
 LIBCHIPDNACLIENT_SRC_ = \
 	cardhash.cpp \
 	cardstatus.cpp \
@@ -29,12 +40,12 @@ LIBCHIPDNACLIENT_SRC_ = \
 	response.cpp \
 	responsecontainer.cpp \
 	tcpipclient.cpp \
-	xmlrequest.cpp 
+	xmlrequest.cpp
 
 LIBCHIPDNACLIENT_SRC = $(patsubst %, $(OBJ_DIR)/%, $(LIBCHIPDNACLIENT_SRC_))
 LIBCHIPDNACLIENT_OBJ = $(LIBCHIPDNACLIENT_SRC:.cpp=.o)
 
-DEPENDENCIES = -lrt 
+DEPENDENCIES = -lrt
 
 G++ = $(CPP_COMPILE) -D_GLIBC_2_0_SOURCE $(LDFLAGS)
 
@@ -43,12 +54,13 @@ all: libchipdnaclient
 $(OBJ_DIR)/%.o: $(LIBCHIPDNACLIENT_SRC_PATH)/%.cpp | $(OBJ_DIR)
 	$(G++) -c -o $@ $< $(CFLAGS) -I$(LIBCHIPDNACLIENT_INC_PATH) -I$(LIBOPENSSL_INC)
 
-$(OBJ_DIR):	 
+$(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
-	
-libchipdnaclient : $(OBJDIR) $(LIBCHIPDNACLIENT_OBJ)
-	cd $(OBJ_DIR) && $(AR) x $(CPP_ROOTPATH)/$(CPP_VERSION)/$(CPP_LIB_NAME).a
+
+libchipdnaclient : $(LIBCHIPDNACLIENT_OBJ)
+	cd $(OBJ_DIR) && $(AR) x $(CPP_LIB_PATH)/$(CPP_LIB_NAME).a
 	$(AR) rcs $(LIBCHIPDNACLIENT_LIBNAME) $(OBJ_DIR)/*.o $(LIBCHIPDNACLIENT_OBJ)
 
 clean :
 	rm -f $(OBJ_DIR)/*.o $(LIBCHIPDNACLIENT_OBJ) $(LIBCHIPDNACLIENT_LIBNAME)
+

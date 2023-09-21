@@ -6,7 +6,9 @@ namespace ChipDnaClientLib {
 #pragma region Static Methods
 
 	static std::string intToString(const int number) {
-		return static_cast<std::ostringstream*>(&(std::ostringstream() << number))->str();
+		std::ostringstream str;
+		str << number;
+		return str.str();
 	}
 
 #pragma endregion 
