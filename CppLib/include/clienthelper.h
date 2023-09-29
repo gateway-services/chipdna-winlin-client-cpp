@@ -490,15 +490,15 @@ namespace ChipDnaClientLib {
 		* {@link ParameterKeys.CardHash} Present on completion post {@link ClientHelper.CardDetailsEvent} and the authorization was submitted online.<BR>
 		* {@link ParameterKeys.CardHashCollection} Present on completion post {@link ClientHelper.CardDetailsEvent} and the authorization was submitted online.<BR>
 		* {@link ParameterKeys.CardReference} Present on completion post {@link ClientHelper.CardDetailsEvent} and the authorization was submitted online<BR>
-		* {@link ParameterKeys.OfflineToken} Present on completion post {@link ClientHelper.CardDetailsEvent}.<BR>.<BR>
+		* {@link ParameterKeys.OfflineToken} Present on completion post {@link ClientHelper.CardDetailsEvent}.<BR>
 		* {@link ParameterKeys.AuthDateTime} Present on completion post {@link ClientHelper.CardDetailsEvent}.<BR>
 		* {@link ParameterKeys.TotalAmount} Present on completion post {@link ClientHelper.CardDetailsEvent}.<BR>
 		* {@link ParameterKeys.PanMasked} Present on completion post {@link ClientHelper.CardDetailsEvent}.<BR>
 		* {@link ParameterKeys.ExpiryDate} Present on completion post {@link ClientHelper.CardDetailsEvent}.<BR>
 		* {@link ParameterKeys.AcquirerResponseCode} Present on completion post {@link ClientHelper.CardDetailsEvent} and the authorization was submitted online.<BR>
 		* {@link ParameterKeys.CardSchemeId} Present on completion post {@link ClientHelper.CardDetailsEvent}.<BR>
-		* {@link ParameterKeys.Errors} Present on decline or completion pre {@link ClientHelper.CardDetailsEvent}. Values may come from from {@link ParameterTokens.ChipDnaErrorCode}, {@link PaymentEngineErrorCode} and {@link ParameterTokens.PaymentDeviceErrorCode}
-		* {@link ParameterKeys.ErrorDescription} Present only when error condition encountered and a description message is available.
+		* {@link ParameterKeys.Errors} Present on decline or completion pre {@link ClientHelper.CardDetailsEvent}. Values may come from from {@link ParameterTokens.ChipDnaErrorCode}, {@link PaymentEngineErrorCode} and {@link ParameterTokens.PaymentDeviceErrorCode}.<BR>
+		* {@link ParameterKeys.ErrorDescription} Present only when error condition encountered and a description message is available.<BR>
 		* If the transaction is terminated The following parameters will be returned: {@link ParameterKeys.Errors}.
 		*/
 		void TransactionFinishedEvent(OnEventReceived onEventReceived);
@@ -512,8 +512,8 @@ namespace ChipDnaClientLib {
 		* {@link ParameterKeys.ReceiptData} Present on completion after {@link ClientHelper.CardDetailsEvent}.<BR>
 		* {@link ParameterKeys.SignatureImage} Present if signature was captured on payment device.<BR>
 		* {@link ParameterKeys.SignatureImageMediaType} Present if signature was captured on payment device.<BR>
-		* {@link ParameterKeys.Errors} Present on decline or completion pre {@link ClientHelper.CardDetailsEvent}. Values may come from from {@link ParameterTokens.ChipDnaErrorCode}, {@link PaymentEngineErrorCode} and {@link ParameterTokens.PaymentDeviceErrorCode}
-		* {@link ParameterKeys.ErrorDescription} Present only when error condition encountered and a description message is available.
+		* {@link ParameterKeys.Errors} Present on decline or completion pre {@link ClientHelper.CardDetailsEvent}. Values may come from from {@link ParameterTokens.ChipDnaErrorCode}, {@link PaymentEngineErrorCode} and {@link ParameterTokens.PaymentDeviceErrorCode}.<BR>
+		* {@link ParameterKeys.ErrorDescription} Present only when error condition encountered and a description message is available.<BR>
 		* If the transaction is terminated The following parameters will be returned: {@link ParameterKeys.Errors}.
 		*/
 		void SignatureVerificationRequestedEvent(OnEventReceived onEventReceived);
