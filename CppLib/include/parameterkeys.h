@@ -1334,6 +1334,7 @@ namespace ChipDnaClientLib {
 		*
 		* KEY = SIGNATURE_VERIFICATION_RESULT
 		*/
-		static const std::string SignatureVerificationResult;	};
+		static const std::string SignatureVerificationResult;		
+	};
 }
 #endif // PARAMETERKEYS_H
