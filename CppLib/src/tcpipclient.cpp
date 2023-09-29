@@ -279,6 +279,7 @@ namespace ChipDnaClientLib {
 			pthread_mutex_unlock(&completedRequests_mutex);
 			return temp;
 		}
+		return ResponseContainer();
 	}
 
 	bool TcpIpClient::StartCommand(ParameterSet & parameters, ParameterSet & response, std::string terminalId, const std::string methodName) {

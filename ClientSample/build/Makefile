@@ -1,44 +1,39 @@
+# Set these values as appropriate; example values below.
+# 
+# OPENSSL_INSTALL_DIR = /opt/openssl-3
+#
+# CPP_ROOT_DIR = /opt/rh/gcc-toolset-12/root
+# CPP_ROOT_DIR_ARMHF = /opt/ci/x-tools/armv6-rpi-linux-gnueabihf
+# CPP_PREFIX_ARMHF = armv6-rpi-linux-gnueabihf
 
-LIBCHIPDNACLIENT_PATH_LIB = ../deps
-LIBCHIPDNACLIENT_LIBNAME = chipdnaclient
-LIBCHIPDNACLIENT_PATH_INCLUDE = ../include/clientlib
-CHIPDNACLIENTSAMPLE_PATH_SRC = ../src
-CHIPDNACLIENTSAMPLE_PATH_INCLUDE = ../include
-CHIPDNACLIENTSAMPLE_NAME = chipdnaclientsample
-CHIPDNACLIENTSAMPLE_SRC_ = \
-	client.cpp \
-	clientapp.cpp \
-	configparser.cpp \
-	ExtraParameter.cpp \
-	BaseConfigParser.cpp \
-	pugixml.cpp
-
-CHIPDNACLIENTSAMPLE_SRC = $(patsubst %, $(CHIPDNACLIENTSAMPLE_PATH_SRC)/%, $(CHIPDNACLIENTSAMPLE_SRC_))
-CHIPDNACLIENTSAMPLE_OBJ = $(CHIPDNACLIENTSAMPLE_SRC:.cpp=.o)
-
-DEPENDENCIES = -lrt -lssl -lcrypto
 CFLAGS = -std=c++11
-LDFLAGS = 
-G++ = g++
-ABI_STRING = 
 
 all:
-	@echo "Rules: sample-x86 sample-arm sample-armhf sample-x64"
+	@echo "Rules: sample-x86 sample-armhf sample-x64"
 
-$(CHIPDNACLIENTSAMPLE_PATH_SRC)/%.o: $(CHIPDNACLIENTSAMPLE_PATH_SRC)/%.cpp
-	$(G++) -c -I$(LIBCHIPDNACLIENT_PATH_INCLUDE) -I$(CHIPDNACLIENTSAMPLE_PATH_INCLUDE) -o $@ $< $(CFLAGS)
+sample-x64 :
+	$(MAKE) -e \
+	CFLAGS="$(CFLAGS)" \
+	CPP_COMPILE="$(CPP_ROOT_DIR)/bin/g++ -m64" \
+	LDFLAGS="-L$(OPENSSL_INSTALL_DIR)/lib64" \
+	-f Makefile.x64 all
 
-sample-arm: $(CHIPDNACLIENTSAMPLE_OBJ)
-	$(G++) -L$(LIBCHIPDNACLIENT_PATH_LIB) $^ -o $(CHIPDNACLIENTSAMPLE_NAME)-arm -pthread -l$(LIBCHIPDNACLIENT_LIBNAME)-arm$(ABI_STRING) $(DEPENDENCIES) $(CFLAGS) $(LDFLAGS)
+sample-x86 :
+	$(MAKE) -e \
+	CFLAGS="$(CFLAGS)" \
+	CPP_COMPILE="$(CPP_ROOT_DIR)/bin/g++" \
+	LDFLAGS="-m32 -L$(OPENSSL_INSTALL_DIR)/lib" \	
+	-f Makefile.x86 all
 
-sample-armhf: $(CHIPDNACLIENTSAMPLE_OBJ)
-	$(G++) -L$(LIBCHIPDNACLIENT_PATH_LIB) $^ -o $(CHIPDNACLIENTSAMPLE_NAME)-armhf -pthread -l$(LIBCHIPDNACLIENT_LIBNAME)-armhf$(ABI_STRING) $(DEPENDENCIES) $(CFLAGS) $(LDFLAGS)
-	
-sample-x86: $(CHIPDNACLIENTSAMPLE_OBJ)
-	$(G++) -L$(LIBCHIPDNACLIENT_PATH_LIB) $^ -o $(CHIPDNACLIENTSAMPLE_NAME)-x86 -pthread -l$(LIBCHIPDNACLIENT_LIBNAME)-x86$(ABI_STRING) $(DEPENDENCIES) $(CFLAGS) $(LDFLAGS)
+sample-armhf : 
+	$(MAKE) -e \
+	CFLAGS="$(CFLAGS)" \
+	CPP_COMPILE="$(CPP_ROOT_DIR_ARMHF)/bin/$(CPP_PREFIX_ARMHF)-g++" \
+	LDFLAGS="-L$(OPENSSL_INSTALL_DIR).arm/lib" \
+	-f Makefile.armhf all
 
-sample-x64: $(CHIPDNACLIENTSAMPLE_OBJ)
-	$(G++) -L$(LIBCHIPDNACLIENT_PATH_LIB) $^ -o $(CHIPDNACLIENTSAMPLE_NAME)-x64 -pthread -l$(LIBCHIPDNACLIENT_LIBNAME)-x64$(ABI_STRING) $(DEPENDENCIES) $(CFLAGS) $(LDFLAGS)
-	
-clean:
-	rm -f $(CHIPDNACLIENTSAMPLE_OBJ) $(CHIPDNACLIENTSAMPLE_NAME)
+
+clean :
+	$(MAKE) -f Makefile.x64 clean
+	$(MAKE) -f Makefile.x86 clean
+	$(MAKE) -f Makefile.armhf clean

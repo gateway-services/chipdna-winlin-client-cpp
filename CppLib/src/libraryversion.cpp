@@ -8,8 +8,8 @@ namespace ChipDnaClientLib {
 	const std::string LibraryVersion::ClientOsTag = "CLIENT_OPERATING_SYSTEM";
 	const std::string LibraryVersion::ClientTypeTag = "CLIENT_TYPE";
 
-	const std::string LibraryVersion::ClientLibraryReleaseName = "GREAT BEAR";
-	const std::string LibraryVersion::ClientLibraryVersion = "3.10.1149.5262";
+	const std::string LibraryVersion::ClientLibraryReleaseName = "LAKE LOUISE";
+	const std::string LibraryVersion::ClientLibraryVersion = "3.11.1186.6479";
 	const std::string LibraryVersion::ClientLibraryType = "C++";
 
 }

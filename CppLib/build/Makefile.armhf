@@ -1,16 +1,26 @@
-LIBOPENSSL_INC = /usr/include/x86_64-linux-gnu/
+# Set these values as appropriate; example values below.
+# LIBOPENSSL_INC = /opt/openssl-3.arm/include/
+#
+# CPP_COMPILE = /opt/ci/x-tools/armv6-rpi-linux-gnueabihf/bin/armv6-rpi-linux-gnueabihf-g++
+# CPP_LIB_NAME = libstdc++
+# CPP_LIB_PATH = /opt/ci/x-tools/armv6-rpi-linux-gnueabihf/armv6-rpi-linux-gnueabihf/lib
+# CFLAGS = -std=c++11
+# LDFLAGS = -L/opt/ci/x-tools/armv6-rpi-linux-gnueabihf/armv6-rpi-linux-gnueabihf/lib
+# AR = /opt/ci/x-tools/armv6-rpi-linux-gnueabihf/bin/armv6-rpi-linux-gnueabihf-ar 
 
-CPP_ROOTPATH = /usr/lib/gcc-cross/arm-linux-gnueabi
-CPP_VERSION = 5.4.0
-CPP_COMPILE = arm-linux-gnueabi-g++
-CPP_LIB_NAME = libstdc++
+LIBOPENSSL_INC =
+
+CPP_COMPILE =
+CPP_LIB_NAME =
+CPP_LIB_PATH =
 CFLAGS =
-LDFLAGS = -L/usr/arm-linux-gnueabi/lib
-OBJ_DIR = obj-arm
+LDFLAGS =
+AR =
+OBJ_DIR = obj-armhf
 
+LIBCHIPDNACLIENT_LIBNAME = libchipdnaclient-armhf.a
 LIBCHIPDNACLIENT_SRC_PATH = ../src
 LIBCHIPDNACLIENT_INC_PATH = ../include
-LIBCHIPDNACLIENT_LIBNAME = libchipdnaclient-arm.a
 LIBCHIPDNACLIENT_SRC_ = \
 	cardhash.cpp \
 	cardstatus.cpp \
@@ -35,7 +45,7 @@ LIBCHIPDNACLIENT_SRC_ = \
 LIBCHIPDNACLIENT_SRC = $(patsubst %, $(OBJ_DIR)/%, $(LIBCHIPDNACLIENT_SRC_))
 LIBCHIPDNACLIENT_OBJ = $(LIBCHIPDNACLIENT_SRC:.cpp=.o)
 
-DEPENDENCIES = -lrt 
+DEPENDENCIES = -lrt
 
 G++ = $(CPP_COMPILE) -D_GLIBC_2_0_SOURCE $(LDFLAGS)
 
@@ -48,8 +58,9 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 libchipdnaclient : $(LIBCHIPDNACLIENT_OBJ)
-	cd $(OBJ_DIR) && $(AR) x $(CPP_ROOTPATH)/$(CPP_VERSION)/$(CPP_LIB_NAME).a
+	cd $(OBJ_DIR) && $(AR) x $(CPP_LIB_PATH)/$(CPP_LIB_NAME).a
 	$(AR) rcs $(LIBCHIPDNACLIENT_LIBNAME) $(OBJ_DIR)/*.o $(LIBCHIPDNACLIENT_OBJ)
 
 clean :
 	rm -f $(OBJ_DIR)/*.o $(LIBCHIPDNACLIENT_OBJ) $(LIBCHIPDNACLIENT_LIBNAME)
+

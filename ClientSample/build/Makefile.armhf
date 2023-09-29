@@ -1,9 +1,19 @@
+# Set these values as appropriate; example values below.
+#
+# CPP_COMPILE = /opt/ci/x-tools/armv6-rpi-linux-gnueabihf/bin/armv6-rpi-linux-gnueabihf-g++
+# CFLAGS = -std=c++11
+# LDFLAGS = /opt/openssl-3.arm/lib
+
+CPP_COMPILE =
+CFLAGS =
+LDFLAGS =
+
 LIBCHIPDNACLIENT_PATH_LIB = ../deps
-LIBCHIPDNACLIENT_LIBNAME = chipdnaclient
+LIBCHIPDNACLIENT_LIBNAME = chipdnaclient-armhf
 LIBCHIPDNACLIENT_PATH_INCLUDE = ../include/clientlib
 CHIPDNACLIENTSAMPLE_PATH_SRC = ../src
 CHIPDNACLIENTSAMPLE_PATH_INCLUDE = ../include
-CHIPDNACLIENTSAMPLE_NAME = chipdnaclientsample
+CHIPDNACLIENTSAMPLE_NAME = chipdnaclientsample.armhf
 CHIPDNACLIENTSAMPLE_SRC_ = \
 	client.cpp \
 	clientapp.cpp \
@@ -16,12 +26,11 @@ CHIPDNACLIENTSAMPLE_SRC = $(patsubst %, $(CHIPDNACLIENTSAMPLE_PATH_SRC)/%, $(CHI
 CHIPDNACLIENTSAMPLE_OBJ = $(CHIPDNACLIENTSAMPLE_SRC:.cpp=.o)
 
 DEPENDENCIES = -lrt -lssl -lcrypto
-CFLAGS = 
-LDFLAGS = 
-G++ = arm-linux-gnueabihf-g++ $(LDFLAGS) -std=c++11
+
+G++ = $(CPP_COMPILE) $(LDFLAGS)
 
 all: $(CHIPDNACLIENTSAMPLE_OBJ)
-	$(G++) -L$(LIBCHIPDNACLIENT_PATH_LIB) $^ -o $(CHIPDNACLIENTSAMPLE_NAME)-armhf -pthread -l$(LIBCHIPDNACLIENT_LIBNAME)-armhf $(DEPENDENCIES) $(CFLAGS)
+	$(G++) -L$(LIBCHIPDNACLIENT_PATH_LIB) $^ -o $(CHIPDNACLIENTSAMPLE_NAME) -pthread -l$(LIBCHIPDNACLIENT_LIBNAME) $(DEPENDENCIES) $(CFLAGS)
 	rm -f $(CHIPDNACLIENTSAMPLE_OBJ)
 
 $(CHIPDNACLIENTSAMPLE_PATH_SRC)/%.o: $(CHIPDNACLIENTSAMPLE_PATH_SRC)/%.cpp
