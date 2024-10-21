@@ -85,6 +85,8 @@ namespace ChipDnaClientLib {
 	const std::string ParameterKeys::PaymentDeviceStatus = "PAYMENT_DEVICE_STATUS";
 
 	const std::string ParameterKeys::ReceiptData = "RECEIPT_DATA";
+	const std::string ParameterKeys::ReceiptDataMerchant = "RECEIPT_DATA_MERCHANT";
+	const std::string ParameterKeys::ReceiptDataCardholder = "RECEIPT_DATA_CARDHOLDER";
 
 	const std::string ParameterKeys::RequestQueueStatus = "REQUEST_QUEUE_STATUS";
 

@@ -375,6 +375,22 @@ namespace ChipDnaClientLib {
 
 		/**
 		* \brief
+		* 	Parameter key for merchant receipt data in XML format representing {@link ReceiptDataMerchant}.
+		*
+		* KEY = RECEIPT_DATA_MERCHANT
+		*/
+		static const std::string ReceiptDataMerchant;
+
+		/**
+		* \brief
+		* 	Parameter key for cardholder receipt data in XML format representing {@link ReceiptDataCardholder}.
+		*
+		* KEY = RECEIPT_DATA_CARDHOLDER
+		*/
+		static const std::string ReceiptDataCardholder;
+
+		/**
+		* \brief
 		* 	Parameter key for the status of the queue of requests to be sent to the Creditcall payment gateway in XML format representing {@link ChipDnaStatus.RequestQueueStatus}.
 		*
 		* KEY = REQUEST_QUEUE_STATUS

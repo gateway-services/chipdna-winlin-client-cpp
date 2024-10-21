@@ -680,8 +680,13 @@ void Client::performRefundTransactionByReference(){
 			if (response.ContainsKey(ParameterKeys::TransactionId)) {
 				std::cout << "Transaction ID: " << response.GetValue(ParameterKeys::TransactionId) << std::endl;
 		}
-			if (response.ContainsKey(ParameterKeys::ReceiptData)) {
-				ReceiptData * data = ReceiptData::GetReceiptDataFromXml(response.GetValue(ParameterKeys::ReceiptData));
+			if (response.ContainsKey(ParameterKeys::ReceiptDataMerchant)) {
+				ReceiptData * data = ReceiptData::GetReceiptDataFromXml(response.GetValue(ParameterKeys::ReceiptDataMerchant));
+			printReceipt(data);
+			delete data;
+		}
+			if (response.ContainsKey(ParameterKeys::ReceiptDataCardholder)) {
+				ReceiptData * data = ReceiptData::GetReceiptDataFromXml(response.GetValue(ParameterKeys::ReceiptDataCardholder));
 			printReceipt(data);
 			delete data;
 		}
@@ -715,7 +720,12 @@ void Client::performConfirmTransaction(){
 			std::cout << "Confirm Transaction Result: " << response.GetValue(ParameterKeys::TransactionResult) << std::endl;
 	}
 		if (!response.ContainsKey(ParameterKeys::Errors)) {
-			ReceiptData * data = ReceiptData::GetReceiptDataFromXml(response.GetValue(ParameterKeys::ReceiptData));
+			ReceiptData * data = ReceiptData::GetReceiptDataFromXml(response.GetValue(ParameterKeys::ReceiptDataMerchant));
+		if (data != NULL){
+			printReceipt(data);
+			delete data;
+		}
+			data = ReceiptData::GetReceiptDataFromXml(response.GetValue(ParameterKeys::ReceiptDataCardholder));
 		if (data != NULL){
 			printReceipt(data);
 			delete data;
@@ -746,7 +756,12 @@ void Client::performVoidTransaction(){
 			std::cout << "Void Transaction Result: " << response.GetValue(ParameterKeys::TransactionResult) << std::endl;
 	}
 		if (!response.ContainsKey(ParameterKeys::Errors)) {
-			ReceiptData * data = ReceiptData::GetReceiptDataFromXml(response.GetValue(ParameterKeys::ReceiptData));
+			ReceiptData * data = ReceiptData::GetReceiptDataFromXml(response.GetValue(ParameterKeys::ReceiptDataMerchant));
+		if (data != NULL){
+			printReceipt(data);
+			delete data;
+		}
+			data = ReceiptData::GetReceiptDataFromXml(response.GetValue(ParameterKeys::ReceiptDataCardholder));
 		if (data != NULL){
 			printReceipt(data);
 			delete data;
@@ -856,7 +871,7 @@ void Client::printReceipt(ReceiptData * receipt){
 		mkdir(path.c_str(), 0777);
 #endif
 		const std::string filePath = path + "/ReceiptData" + getDate() + ".txt";
-		std::ofstream file(filePath.c_str());
+		std::ofstream file(filePath.c_str(), std::ios::app);
 		file << stringStream.str();
 		//file.close();
 	}
@@ -1208,8 +1223,13 @@ void Client::transactionFinishedEvent(KeyValue & parameters)
 {
 	std::stringstream stringStream;
 	stringStream << "TransactonFinished: ";
-	std::string xml = getParameterValue(ParameterKeys::ReceiptData, parameters);
-		ReceiptData * ptr_receiptData = ReceiptData::GetReceiptDataFromXml(xml);
+
+	std::string merchantReceiptXml = getParameterValue(ParameterKeys::ReceiptDataMerchant, parameters);
+		ReceiptData * ptr_receiptDataMerchant = ReceiptData::GetReceiptDataFromXml(merchantReceiptXml);
+
+	std::string cardholderReceiptXml = getParameterValue(ParameterKeys::ReceiptDataCardholder, parameters);
+		ReceiptData * ptr_receiptDataCardholder = ReceiptData::GetReceiptDataFromXml(cardholderReceiptXml);
+
 	std::string errorDescription = "";
 	for (KeyValue::const_iterator it = parameters.begin(); it != parameters.end(); it++)
 	{
@@ -1234,9 +1254,13 @@ void Client::transactionFinishedEvent(KeyValue & parameters)
 		std::cout << "Error Description: " << errorDescription << "\n" << std::endl;
 	}
 
-	if (ptr_receiptData != NULL){
-		printReceipt(ptr_receiptData);
-		delete ptr_receiptData;
+	if (ptr_receiptDataMerchant != NULL){
+		printReceipt(ptr_receiptDataMerchant);
+		delete ptr_receiptDataMerchant;
+	}
+	if (ptr_receiptDataCardholder != NULL){
+		printReceipt(ptr_receiptDataCardholder);
+		delete ptr_receiptDataCardholder;
 	}
 
 	resetTransaction();
@@ -1247,8 +1271,13 @@ void Client::signatureVerificationRequestedEvent(KeyValue & parameters)
 {
 	std::stringstream stringStream, eventParams;
 	stringStream << "Signature Verification Requested Event Parameters: ";
-	std::string xml = getParameterValue(ParameterKeys::ReceiptData, parameters);
-	ReceiptData * ptr_receiptData = ReceiptData::GetReceiptDataFromXml(xml);
+
+	std::string merchantReceiptXml = getParameterValue(ParameterKeys::ReceiptDataMerchant, parameters);
+	ReceiptData* ptr_receiptDataMerchant = ReceiptData::GetReceiptDataFromXml(merchantReceiptXml);
+
+	std::string cardholderReceiptXml = getParameterValue(ParameterKeys::ReceiptDataCardholder, parameters);
+	ReceiptData* ptr_receiptDataCardholder = ReceiptData::GetReceiptDataFromXml(cardholderReceiptXml);
+
 	std::string errorDescription = "";
 	for (KeyValue::const_iterator it = parameters.begin(); it != parameters.end(); it++)
 	{
@@ -1274,9 +1303,13 @@ void Client::signatureVerificationRequestedEvent(KeyValue & parameters)
 		std::cout << "Error Description: " << errorDescription << "\n" << std::endl;
 	}
 
-	if (ptr_receiptData != NULL){
-		printReceipt(ptr_receiptData);
-		delete ptr_receiptData;
+	if (ptr_receiptDataMerchant != NULL) {
+		printReceipt(ptr_receiptDataMerchant);
+		delete ptr_receiptDataMerchant;
+	}
+	if (ptr_receiptDataCardholder != NULL) {
+		printReceipt(ptr_receiptDataCardholder);
+		delete ptr_receiptDataCardholder;
 	}
 
 	std::cout << "*Waiting for Continue Signature Verification Command --> Press 'J' To Continue*" << std::endl ;
