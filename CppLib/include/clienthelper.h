@@ -281,6 +281,8 @@ namespace ChipDnaClientLib {
 		* \param response {@link ParameterSet} with a parameter collection containing the following name-value pairs:<BR>
 		* 	{@link ParameterKeys.TransactionResult} Always present.<BR>
 		* 	{@link ParameterKeys.ReceiptData} Present on completed transaction, except when terminated.<BR>
+		* 	{@link ParameterKeys.ReceiptDataMerchant} Present on completed transaction, except when terminated.<BR>
+		* 	{@link ParameterKeys.ReceiptDataCardholder} Present on completed transaction, except when terminated.<BR>
 		* 	{@link ParameterKeys.Errors} Present only when error condition encountered. Values may come from {@link ParameterTokens.ValidationErrorCode}, {@link ParameterTokens.ChipDnaErrorCode} and {@link PaymentEngineErrorCode}.
 		* 	{@link ParameterKeys.ErrorDescription} Present only when error condition encountered and a description message is available.
 		* \return True if the command has been processed correctly by the server
@@ -312,6 +314,8 @@ namespace ChipDnaClientLib {
 		* \param response {@link ParameterSet} with a parameter collection containing the following name-value pairs: <BR>
 		* 	{@link ParameterKeys.TransactionResult} Always present.<BR>
 		* 	{@link ParameterKeys.ReceiptData} Present on approved.<BR>
+		* 	{@link ParameterKeys.ReceiptDataMerchant} Present on approved.<BR>
+		* 	{@link ParameterKeys.ReceiptDataCardholder} Present on approved.<BR>
 		* 	{@link ParameterKeys.Errors} Only when error condition encountered. Values may come from {@link ParameterTokens.ValidationErrorCode}, {@link ParameterTokens.ChipDnaErrorCode} and {@link PaymentEngineErrorCode}
 		* 	{@link ParameterKeys.ErrorDescription} Present only when error condition encountered and a description message is available.
 		* \return True if the command has been processed correctly by the server.
@@ -329,6 +333,8 @@ namespace ChipDnaClientLib {
 		* \param response {@link ParameterSet} with parameter collection <BR>
 		* 	{@link ParameterKeys.TransactionResult} Always present.<BR>
 		* 	{@link ParameterKeys.ReceiptData} Present on approved.<BR>
+		* 	{@link ParameterKeys.ReceiptDataMerchant} Present on approved.<BR>
+		* 	{@link ParameterKeys.ReceiptDataCardholder} Present on approved.<BR>
 		* 	{@link ParameterKeys.Errors} Present only when error condition encountered. Values may come from {@link ParameterTokens.ValidationErrorCode}, {@link ParameterTokens.ChipDnaErrorCode} and {@link PaymentEngineErrorCode}.
 		* 	{@link ParameterKeys.ErrorDescription} Present only when error condition encountered and a description message is available.
 		* \return True if the command has been processed correctly by the server
@@ -486,6 +492,8 @@ namespace ChipDnaClientLib {
 		* {@link ParameterKeys.SignatureVerificationRequired} Present on completion post {@link ClientHelper.CardDetailsEvent}.<BR>
 		* {@link ParameterKeys.Reference} Present on completion post {@link ClientHelper.CardDetailsEvent}.<BR>
 		* {@link ParameterKeys.ReceiptData} Present on completion post {@link ClientHelper.CardDetailsEvent}.<BR>
+		* {@link ParameterKeys.ReceiptDataMerchant} Present on completion post {@link ClientHelper.CardDetailsEvent}.<BR>
+		* {@link ParameterKeys.ReceiptDataCardholder} Present on completion post {@link ClientHelper.CardDetailsEvent}.<BR>
 		* {@link ParameterKeys.CardEaseReference} Present on completion post {@link ClientHelper.CardDetailsEvent} and the authorization was submitted online.<BR>
 		* {@link ParameterKeys.CardHash} Present on completion post {@link ClientHelper.CardDetailsEvent} and the authorization was submitted online.<BR>
 		* {@link ParameterKeys.CardHashCollection} Present on completion post {@link ClientHelper.CardDetailsEvent} and the authorization was submitted online.<BR>
@@ -510,6 +518,8 @@ namespace ChipDnaClientLib {
 		* The following parameters will be returned: <BR>
 		* If the transaction is completed the following parameters will be Present:<BR>
 		* {@link ParameterKeys.ReceiptData} Present on completion after {@link ClientHelper.CardDetailsEvent}.<BR>
+		* {@link ParameterKeys.ReceiptDataMerchant} Present on completion after {@link ClientHelper.CardDetailsEvent}.<BR>
+		* {@link ParameterKeys.ReceiptDataCardholder} Present on completion after {@link ClientHelper.CardDetailsEvent}.<BR>
 		* {@link ParameterKeys.SignatureImage} Present if signature was captured on payment device.<BR>
 		* {@link ParameterKeys.SignatureImageMediaType} Present if signature was captured on payment device.<BR>
 		* {@link ParameterKeys.Errors} Present on decline or completion pre {@link ClientHelper.CardDetailsEvent}. Values may come from from {@link ParameterTokens.ChipDnaErrorCode}, {@link PaymentEngineErrorCode} and {@link ParameterTokens.PaymentDeviceErrorCode}.<BR>
