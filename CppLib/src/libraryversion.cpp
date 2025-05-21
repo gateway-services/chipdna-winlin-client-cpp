@@ -9,7 +9,7 @@ namespace ChipDnaClientLib {
 	const std::string LibraryVersion::ClientTypeTag = "CLIENT_TYPE";
 
 	const std::string LibraryVersion::ClientLibraryReleaseName = "INARI";
-	const std::string LibraryVersion::ClientLibraryVersion = "3.18.1808";
+	const std::string LibraryVersion::ClientLibraryVersion = "3.18.1868.3188";
 	const std::string LibraryVersion::ClientLibraryType = "C++";
 
 }
